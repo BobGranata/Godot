@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://br7ypoowundjc"]
+
+[ext_resource type="Script" path="res://Cars/CarUnderHood.gd" id="1_8peva"]
+[ext_resource type="Texture2D" uid="uid://crs7qchm33flc" path="res://Sprites/1/6.jpg" id="2_mh6dj"]
+[ext_resource type="PackedScene" path="res://MarkCircle.tscn" id="3_rqtk6"]
+
+[node name="car_under_hood" type="Node2D"]
+position = Vector2(310, 231)
+script = ExtResource("1_8peva")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_mh6dj")
+
+[node name="MarkCircle" parent="." instance=ExtResource("3_rqtk6")]
+position = Vector2(-93, -91)
+scale = Vector2(0.5, 0.5)
+
+[node name="Button" type="Button" parent="."]
+offset_left = -284.0
+offset_top = -210.0
+offset_right = -224.0
+offset_bottom = -179.0
+text = "Back"
+
+[connection signal="input_event" from="MarkCircle" to="." method="_on_mark_circle_input_event"]
+[connection signal="gui_input" from="Button" to="." method="_on_button_gui_input"]

@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://b0m0rutwvcd11"]
+
+[ext_resource type="Script" path="res://CarView.gd" id="1_cra8l"]
+[ext_resource type="PackedScene" uid="uid://cscdrbcl8r6nk" path="res://Cars/CarFront.tscn" id="2_p1lcp"]
+
+[node name="CarView" type="Node2D"]
+script = ExtResource("1_cra8l")
+
+[node name="CarFront" parent="." instance=ExtResource("2_p1lcp")]

@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://cscdrbcl8r6nk"]
+
+[ext_resource type="Script" path="res://Cars/CarFront.gd" id="1_e38qy"]
+[ext_resource type="PackedScene" path="res://MarkCircle.tscn" id="2_kq0e2"]
+[ext_resource type="Texture2D" uid="uid://c3arat6jqj65b" path="res://Sprites/1/1.jpg" id="3_gkspi"]
+
+[node name="CarFront" type="Node2D"]
+script = ExtResource("1_e38qy")
+mark_circle = ExtResource("2_kq0e2")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(313.333, 237)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_gkspi")
+
+[node name="Area2D" type="Area2D" parent="."]
+visible = false
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+polygon = PackedVector2Array(169, 153, 66, 193, 53, 208, 92, 221, 229, 222, 313, 206, 318, 196, 381, 176, 381, 166, 228, 162)
+
+[node name="VinCircle" parent="." instance=ExtResource("2_kq0e2")]
+position = Vector2(471, 261)
+scale = Vector2(0.5, 0.5)
+
+[connection signal="input_event" from="Area2D" to="." method="_on_Area2D_input_event"]
+[connection signal="input_event" from="VinCircle" to="." method="_on_vin_circle_input_event"]

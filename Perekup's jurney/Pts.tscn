@@ -1,0 +1,98 @@
+[gd_scene load_steps=3 format=3 uid="uid://bg2r4wi1j1t52"]
+
+[ext_resource type="Texture2D" uid="uid://dtelndhmpvmpi" path="res://pts_shadow.png" id="2"]
+[ext_resource type="Script" path="res://Pts.gd" id="3"]
+
+[node name="Pts" type="Node2D"]
+script = ExtResource("3")
+
+[node name="PtsPanel" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 317.0
+offset_bottom = 415.0
+
+[node name="Shadow" type="Sprite2D" parent="PtsPanel"]
+visible = false
+position = Vector2(175, 222)
+texture = ExtResource("2")
+
+[node name="ColorRect" type="ColorRect" parent="PtsPanel"]
+layout_mode = 0
+offset_right = 317.0
+offset_bottom = 415.0
+mouse_filter = 1
+color = Color(0.145098, 0.145098, 0.164706, 1)
+
+[node name="Title" type="Label" parent="PtsPanel"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 15.0
+offset_right = 287.0
+offset_bottom = 41.0
+pivot_offset = Vector2(124, 45)
+text = "Паспорт транспортного средства"
+
+[node name="Model" type="Label" parent="PtsPanel"]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 61.0
+offset_right = 244.0
+offset_bottom = 77.0
+pivot_offset = Vector2(124, 45)
+mouse_filter = 1
+theme_override_font_sizes/font_size = 13
+text = "TEST"
+
+[node name="VIN" type="Label" parent="PtsPanel"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 97.0
+offset_right = 247.0
+offset_bottom = 113.0
+pivot_offset = Vector2(124, 45)
+mouse_filter = 1
+theme_override_font_sizes/font_size = 13
+text = "TEST
+"
+
+[node name="Color" type="Label" parent="PtsPanel"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 132.0
+offset_right = 247.0
+offset_bottom = 148.0
+pivot_offset = Vector2(124, 45)
+mouse_filter = 1
+theme_override_font_sizes/font_size = 13
+text = "TEST
+"
+
+[node name="Volume" type="Label" parent="PtsPanel"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 172.0
+offset_right = 172.0
+offset_bottom = 198.0
+mouse_filter = 1
+theme_override_font_sizes/font_size = 13
+text = "TEST
+"
+
+[node name="Number" type="Label" parent="PtsPanel"]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 206.0
+offset_right = 173.0
+offset_bottom = 232.0
+mouse_filter = 1
+theme_override_font_sizes/font_size = 13
+text = "TEST
+"
+
+[connection signal="gui_input" from="PtsPanel/ColorRect" to="." method="_on_Pts_gui_input"]
+[connection signal="gui_input" from="PtsPanel/Model" to="." method="_on_Model_gui_input"]
+[connection signal="gui_input" from="PtsPanel/VIN" to="." method="_on_VIN_gui_input"]
+[connection signal="gui_input" from="PtsPanel/Color" to="." method="_on_Color_gui_input"]
+[connection signal="gui_input" from="PtsPanel/Volume" to="." method="_on_volume_gui_input"]
+[connection signal="gui_input" from="PtsPanel/Number" to="." method="_on_number_gui_input"]

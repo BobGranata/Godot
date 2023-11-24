@@ -1,0 +1,49 @@
+{
+	"advertisement" :
+	{
+		"adv" : 
+		{		
+			"type": "1",
+			"model" : "KIA",
+			"vin" : "XTZ131HA000024175",
+			"color" : "Зелёный",
+			"volume" : "1.6"
+		},
+		"pts" :
+		{
+			"type" : "2",		
+			"model" : "KIA",
+			"vin" : "XTZ131HA000024175",
+			"color" : "Зелёный",
+			"volume" : "1.6",
+			"number" : "KNEFE22226581831"			
+		},
+		"car" :
+		{			
+			"engine" :
+			{
+				"type" : "3",
+				"volume" : "1.6",
+				"number" : "KNEFE22226581831"
+			},
+			"vinPlate" :
+			{
+				"type" : "4",
+				"model" : "KIA",
+				"vin" : "XTZ131HA000024175",
+				"color" : "Зелёный"
+			}			
+		},		
+		"mismatch" :
+		{
+			"type_first" : "1",
+			"type_second" : "3",
+			"field" : "9",
+		}		
+	}
+	,
+	"player": {
+		"health": "6.0",
+		"position": "Vector2( 172.666, 128 )"
+	}
+}

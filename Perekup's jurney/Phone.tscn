@@ -1,0 +1,79 @@
+[gd_scene load_steps=6 format=3 uid="uid://cfll87y1imqxa"]
+
+[ext_resource type="FontFile" uid="uid://m1odn2c6ubmb" path="res://calibri.ttf" id="2"]
+[ext_resource type="Texture2D" uid="uid://du6gvmvfdds8g" path="res://phone3.png" id="3"]
+[ext_resource type="Script" path="res://Phone.gd" id="4"]
+[ext_resource type="Texture2D" uid="uid://bl6pl0vm30bpt" path="res://phone_shadow.png" id="5"]
+
+[sub_resource type="FontFile" id="1"]
+subpixel_positioning = 0
+msdf_pixel_range = 14
+msdf_size = 128
+fallbacks = Array[Font]([ExtResource("2")])
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/16/0/kerning_overrides/16/0 = Vector2(0, 0)
+
+[node name="Phone" type="Node2D"]
+position = Vector2(-1, 6)
+script = ExtResource("4")
+
+[node name="PhonePanel" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_top = -5.0
+offset_right = 236.0
+offset_bottom = 501.0
+size_flags_horizontal = 0
+
+[node name="PhoneShadow" type="Sprite2D" parent="PhonePanel"]
+visible = false
+position = Vector2(135, 265)
+texture = ExtResource("5")
+
+[node name="Sprite2D" type="Sprite2D" parent="PhonePanel"]
+position = Vector2(119, 255)
+texture = ExtResource("3")
+
+[node name="Model" type="Label" parent="PhonePanel"]
+layout_mode = 2
+offset_left = 27.0
+offset_top = 203.0
+offset_right = 76.0
+offset_bottom = 222.0
+size_flags_horizontal = 0
+size_flags_vertical = 8
+mouse_filter = 1
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = SubResource("1")
+text = "TEST"
+
+[node name="VIN" type="Label" parent="PhonePanel"]
+layout_mode = 2
+offset_left = 29.0
+offset_top = 174.0
+offset_right = 57.0
+offset_bottom = 193.0
+mouse_filter = 1
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = SubResource("1")
+text = "TEST"
+
+[node name="Color" type="Label" parent="PhonePanel"]
+layout_mode = 2
+offset_left = 25.0
+offset_top = 235.0
+offset_right = 111.0
+offset_bottom = 254.0
+mouse_filter = 1
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = SubResource("1")
+text = "TEST"
+
+[connection signal="gui_input" from="PhonePanel" to="." method="_on_Phone_gui_input"]
+[connection signal="gui_input" from="PhonePanel/Model" to="." method="_on_Model_gui_input"]
+[connection signal="gui_input" from="PhonePanel/VIN" to="." method="_on_VIN_gui_input"]
+[connection signal="gui_input" from="PhonePanel/Color" to="." method="_on_Color_gui_input"]

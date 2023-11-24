@@ -1,0 +1,44 @@
+[gd_scene load_steps=2 format=3 uid="uid://dgknbxkysqgtf"]
+
+[ext_resource type="Script" path="res://Cars/EnginePlate.gd" id="1_bpyqt"]
+
+[node name="EnginePlate" type="Node2D"]
+script = ExtResource("1_bpyqt")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="Panel" type="Panel" parent="."]
+offset_left = 57.0
+offset_top = 69.0
+offset_right = 379.0
+offset_bottom = 232.0
+
+[node name="Volume" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 19.0
+offset_right = 108.0
+offset_bottom = 45.0
+mouse_filter = 1
+text = "123456789"
+
+[node name="Number" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 29.0
+offset_top = 52.0
+offset_right = 115.0
+offset_bottom = 78.0
+mouse_filter = 1
+text = "1.8 L
+"
+
+[node name="Button" type="Button" parent="."]
+offset_left = 22.0
+offset_top = 12.0
+offset_right = 80.0
+offset_bottom = 44.0
+text = "Back"
+
+[connection signal="gui_input" from="Panel/Volume" to="." method="_on_label_gui_input"]
+[connection signal="gui_input" from="Panel/Number" to="." method="_on_number_gui_input"]
+[connection signal="gui_input" from="Button" to="." method="_on_button_gui_input"]
