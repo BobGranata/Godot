@@ -1,0 +1,85 @@
+[gd_scene load_steps=7 format=3 uid="uid://cue72t2paquth"]
+
+[ext_resource type="Script" path="res://Room/room.gd" id="1_3nm5e"]
+[ext_resource type="Texture2D" uid="uid://dgpk8posoylb" path="res://Room/home.jpg" id="2_aquak"]
+[ext_resource type="Texture2D" uid="uid://bc36sd57osaio" path="res://mark_1.png" id="4_np2tq"]
+[ext_resource type="Texture2D" uid="uid://cxv6cclojweud" path="res://mark_2.png" id="5_mi11j"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mgvnk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_np2tq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_mi11j")
+}],
+"loop": true,
+"name": &"click",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_36my1"]
+radius = 13.0
+
+[node name="Room" type="CanvasLayer"]
+script = ExtResource("1_3nm5e")
+
+[node name="Background" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+color = Color(0.14902, 0.14902, 0.14902, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(656.371, 400)
+scale = Vector2(0.846561, 0.846561)
+texture = ExtResource("2_aquak")
+
+[node name="Picture" type="Area2D" parent="."]
+position = Vector2(72, 24)
+metadata/_edit_group_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Picture"]
+polygon = PackedVector2Array(758, 193, 755, 235, 785, 250, 785, 206)
+
+[node name="Label" type="Label" parent="."]
+offset_left = 143.0
+offset_top = 653.0
+offset_right = 272.0
+offset_bottom = 691.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Test"
+
+[node name="Window" type="Area2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Window"]
+position = Vector2(24, 32)
+polygon = PackedVector2Array(348, 310, 488, 232, 488, 80, 346, 157)
+
+[node name="Area2D2" type="Area2D" parent="."]
+position = Vector2(336, 432)
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Area2D2"]
+scale = Vector2(0.414063, 0.414063)
+sprite_frames = SubResource("SpriteFrames_mgvnk")
+animation = &"click"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
+shape = SubResource("CircleShape2D_36my1")
+
+[node name="Desk" type="Area2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Desk"]
+position = Vector2(80, 104)
+polygon = PackedVector2Array(348, 310, 488, 232, 440, 208, 304, 280)
+
+[connection signal="input_event" from="Picture" to="." method="_on_area_2d_input_event"]
+[connection signal="input_event" from="Window" to="." method="_on_window_input_event"]
+[connection signal="mouse_entered" from="Area2D2" to="." method="_on_area_2d_2_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D2" to="." method="_on_area_2d_2_mouse_exited"]
+[connection signal="input_event" from="Desk" to="." method="_on_desk_input_event"]

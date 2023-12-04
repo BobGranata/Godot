@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cscdrbcl8r6nk"]
 
 [ext_resource type="Script" path="res://Cars/CarFront.gd" id="1_e38qy"]
-[ext_resource type="PackedScene" path="res://MarkCircle.tscn" id="2_kq0e2"]
+[ext_resource type="PackedScene" uid="uid://bph5l6v1wjfk0" path="res://MarkCircle.tscn" id="2_kq0e2"]
 [ext_resource type="Texture2D" uid="uid://c3arat6jqj65b" path="res://Sprites/1/1.jpg" id="3_gkspi"]
 
 [node name="CarFront" type="Node2D"]
