@@ -4,6 +4,8 @@ signal level_changed(level_name)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	
+	var dict_car = BaseScript.m_dict_car
 	pass # Replace with function body.
 
 

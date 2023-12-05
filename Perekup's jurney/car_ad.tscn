@@ -1,0 +1,61 @@
+[gd_scene load_steps=4 format=3 uid="uid://dok7d2tmih2k"]
+
+[ext_resource type="Script" path="res://CarAd.gd" id="1_xubm5"]
+[ext_resource type="FontFile" uid="uid://m1odn2c6ubmb" path="res://calibri.ttf" id="2_47p8u"]
+
+[sub_resource type="FontFile" id="FontFile_dlfht"]
+subpixel_positioning = 0
+msdf_pixel_range = 14
+msdf_size = 128
+fallbacks = Array[Font]([ExtResource("2_47p8u")])
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/16/0/kerning_overrides/16/0 = Vector2(0, 0)
+
+[node name="CarAd" type="Panel"]
+offset_right = 224.0
+offset_bottom = 128.0
+script = ExtResource("1_xubm5")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 224.0
+offset_bottom = 128.0
+
+[node name="Model" type="Label" parent="."]
+layout_mode = 2
+offset_left = 18.0
+offset_top = 45.0
+offset_right = 67.0
+offset_bottom = 64.0
+size_flags_horizontal = 0
+size_flags_vertical = 8
+mouse_filter = 1
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = SubResource("FontFile_dlfht")
+text = "TEST"
+
+[node name="VIN" type="Label" parent="."]
+layout_mode = 2
+offset_left = 20.0
+offset_top = 16.0
+offset_right = 51.0
+offset_bottom = 35.0
+mouse_filter = 1
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = SubResource("FontFile_dlfht")
+text = "TEST"
+
+[node name="Color" type="Label" parent="."]
+layout_mode = 2
+offset_left = 16.0
+offset_top = 77.0
+offset_right = 102.0
+offset_bottom = 96.0
+mouse_filter = 1
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = SubResource("FontFile_dlfht")
+text = "TEST"

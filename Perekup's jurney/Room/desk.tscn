@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://5tbdxkl2oe4r"]
+[gd_scene load_steps=5 format=3 uid="uid://5tbdxkl2oe4r"]
 
 [ext_resource type="Script" path="res://Room/desk.gd" id="1_4hkku"]
 [ext_resource type="Texture2D" uid="uid://cyre1m1ap33dv" path="res://Room/desk.jpg" id="1_y7tfr"]
 [ext_resource type="PackedScene" uid="uid://cegtvs1rejw1r" path="res://order.tscn" id="3_0ttos"]
+[ext_resource type="PackedScene" uid="uid://dok7d2tmih2k" path="res://car_ad.tscn" id="4_0woan"]
 
 [node name="Desk" type="CanvasLayer"]
 script = ExtResource("1_4hkku")
@@ -30,5 +31,24 @@ text = "Back"
 
 [node name="Order" parent="." instance=ExtResource("3_0ttos")]
 position = Vector2(72, 288)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+offset_left = 704.0
+offset_top = 288.0
+offset_right = 928.0
+offset_bottom = 768.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+layout_mode = 2
+theme_override_constants/separation = 100
+
+[node name="CarAd" parent="ScrollContainer/VBoxContainer" instance=ExtResource("4_0woan")]
+layout_mode = 2
+
+[node name="CarAd2" parent="ScrollContainer/VBoxContainer" instance=ExtResource("4_0woan")]
+layout_mode = 2
+
+[node name="CarAd3" parent="ScrollContainer/VBoxContainer" instance=ExtResource("4_0woan")]
+layout_mode = 2
 
 [connection signal="gui_input" from="Button" to="." method="_on_button_gui_input"]
