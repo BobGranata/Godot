@@ -13,7 +13,7 @@ func _process(delta):
 
 
 func _on_area_2d_input_event(viewport, event, shape_idx):
-	if event.is_pressed() :	
+	if event.is_action_pressed("click") :
 		emit_signal("level_changed", "Room/picture_on_the_wall")
 
 func _on_window_input_event(viewport, event, shape_idx):
@@ -29,7 +29,7 @@ func _on_area_2d_2_mouse_exited():
 	$Area2D2/AnimatedSprite2D.stop()
 
 func _on_desk_input_event(viewport, event, shape_idx):
-	if event.is_pressed() :	
+	if event.is_action_pressed("click") :
 		emit_signal("level_changed", "Room/desk")
 		
 func cleanup():	
