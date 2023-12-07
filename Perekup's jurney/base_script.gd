@@ -59,10 +59,17 @@ func generate_value(key):
 		return generate_word(characters, 5)
 
 var m_dict_car = {}
+var m_current_car_id
 
 func load_game():
 	for i in 10:
 		load_car(i)
+
+func set_car_id(id : int):
+	m_current_car_id = id
+	
+func get_currect_car():
+	return m_dict_car[m_current_car_id]
 
 func load_car(car_id):
 	randomize()
@@ -84,7 +91,7 @@ func load_car(car_id):
 	dict_advert[MODEL] = model
 	dict_advert[VIN] = vin
 	dict_advert[COLOR] = color
-#	dict_advert[VOLUME] = volume
+	dict_advert[VOLUME] = volume
 	
 	var dict_engine_plate = {}
 	dict_engine_plate[ENGINE_NUMBER] = number	
