@@ -29,8 +29,8 @@ func set_data(dict_buy_car):
 #	engine_volume.gui_input.connect(_on_volume_gui_input, "kek")
 
 func _on_button_gui_input(event):
-	if event.is_pressed() :	
-		emit_signal("level_back")	
+	if event.is_pressed() :
+		emit_signal("level_back")
 
 func _on_volume_gui_input(event, test):
 	emit_signal("add_compare_value", event, base_models.ENGINE_PLATE, base_models.VOLUME, engine_volume)

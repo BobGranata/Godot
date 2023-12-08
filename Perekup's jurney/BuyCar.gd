@@ -13,7 +13,17 @@ var m_mismatch : base_models.mismatch_class
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	load_game()	
+#	load_game()	
+
+	var dict_car = BaseScript.get_currect_car()
+	
+	var dict_pts = dict_car[BaseScript.PTS]
+	var dict_advert = dict_car[BaseScript.PHONE]
+	
+	$Pts.set_data_dict(dict_pts)
+	$Phone.set_data_dict(dict_advert)
+	$CarView.set_data_dict(dict_car)
+	pass
 	
 func _draw():
 	pass
@@ -21,6 +31,16 @@ func _draw():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+
+func set_data():
+	var dict_car = BaseScript.get_currect_car()
+	
+	var dict_pts = dict_car[BaseScript.PTS]
+	var dict_advert = dict_car[BaseScript.PHONE]
+	
+	$Pts.set_data_dict(dict_pts)
+	$Phone.set_data_dict(dict_advert)
+	$CarView.set_data_dict(dict_car)
 
 func add_compare_item(_type_doc, type_item, control_item):
 	print("compare")

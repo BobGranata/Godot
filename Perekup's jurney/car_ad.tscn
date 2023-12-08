@@ -1,0 +1,52 @@
+[gd_scene load_steps=2 format=3 uid="uid://dok7d2tmih2k"]
+
+[ext_resource type="Script" path="res://car_ad.gd" id="1_rxxnb"]
+
+[node name="CarAd" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 216.0
+offset_bottom = 112.0
+script = ExtResource("1_rxxnb")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 216.0
+offset_bottom = 112.0
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Model" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 1
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 14
+text = "TEST"
+
+[node name="Volume" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+mouse_filter = 1
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 14
+text = "TEST"
+
+[node name="Cost" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+mouse_filter = 1
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 14
+text = "TEST"
+
+[connection signal="gui_input" from="ColorRect" to="." method="_on_color_rect_gui_input"]

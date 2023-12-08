@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://byqbpk1b88k7p"]
+
+[ext_resource type="Script" path="res://Room/picture_on_the_wall.gd" id="1_5l8sq"]
+[ext_resource type="Texture2D" uid="uid://d1oq6smavoln3" path="res://Room/family-in-frame.png" id="1_bkl5x"]
+
+[node name="PictureOnTheWall" type="CanvasLayer"]
+script = ExtResource("1_5l8sq")
+
+[node name="Background" type="ColorRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.14902, 0.14902, 0.14902, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(648, 400)
+scale = Vector2(0.707965, 0.707965)
+texture = ExtResource("1_bkl5x")
+
+[node name="Button" type="Button" parent="."]
+offset_left = 22.0
+offset_top = 12.0
+offset_right = 80.0
+offset_bottom = 44.0
+text = "Back"
+
+[connection signal="gui_input" from="Button" to="." method="_on_button_gui_input"]
