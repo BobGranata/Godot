@@ -1,0 +1,105 @@
+[gd_scene load_steps=13 format=3 uid="uid://da058yqr4j5g7"]
+
+[ext_resource type="Texture2D" uid="uid://cf0bwufjaesfi" path="res://Exterior/Speedometer/Panel2.png" id="1_61t5y"]
+[ext_resource type="Script" path="res://panel_pribor.gd" id="1_aa6de"]
+[ext_resource type="Texture2D" uid="uid://bii6qfwuypmlr" path="res://Exterior/Speedometer/centr.png" id="2_rvqq0"]
+[ext_resource type="Texture2D" uid="uid://bgdm15i2gpfky" path="res://Exterior/Speedometer/StrelkaTahometr.png" id="3_q4ess"]
+[ext_resource type="Texture2D" uid="uid://dhp4hnxge8k0x" path="res://Exterior/Speedometer/CentrSpeed.png" id="4_aukgy"]
+[ext_resource type="Texture2D" uid="uid://dibx24jnol6cs" path="res://Exterior/Speedometer/StrelkaSpeedometr.png" id="5_87xkg"]
+[ext_resource type="Texture2D" uid="uid://lnbl8al1inlk" path="res://Exterior/Speedometer/akb.png" id="7_31vvt"]
+[ext_resource type="Texture2D" uid="uid://bjp4u04237kka" path="res://Exterior/Speedometer/chek.png" id="8_a4b6c"]
+[ext_resource type="Texture2D" uid="uid://lb561ejfhins" path="res://Exterior/Speedometer/masl.png" id="9_cva2r"]
+[ext_resource type="Texture2D" uid="uid://bfhfeep5ysgmk" path="res://Exterior/Speedometer/airbag.png" id="10_cwfq6"]
+[ext_resource type="Texture2D" uid="uid://bvlw53dlu6d4" path="res://Exterior/Speedometer/abs.png" id="11_82o24"]
+[ext_resource type="Texture2D" uid="uid://ntj5fidf00nn" path="res://Exterior/Speedometer/toplivo.png" id="12_o5ufv"]
+
+[node name="PanelPribor" type="Node2D"]
+script = ExtResource("1_aa6de")
+
+[node name="Panel" type="Sprite2D" parent="."]
+position = Vector2(636.781, 315.5)
+scale = Vector2(0.541209, 0.541209)
+texture = ExtResource("1_61t5y")
+
+[node name="Centr" type="Sprite2D" parent="Panel"]
+position = Vector2(-609.284, 40.8737)
+rotation = -0.95644
+scale = Vector2(0.992476, 0.992476)
+texture = ExtResource("2_rvqq0")
+
+[node name="StrelkaTahometr" type="Sprite2D" parent="Panel/Centr"]
+position = Vector2(-158.723, -82.7519)
+scale = Vector2(0.972763, 0.972763)
+texture = ExtResource("3_q4ess")
+
+[node name="CentrSpeed" type="Sprite2D" parent="Panel"]
+position = Vector2(-17.8601, 0.509329)
+rotation = -2.81871
+scale = Vector2(0.989827, 0.989827)
+texture = ExtResource("4_aukgy")
+
+[node name="StrelkaSpeedometr" type="Sprite2D" parent="Panel/CentrSpeed"]
+position = Vector2(137.422, -132.243)
+scale = Vector2(1.11067, 1.11067)
+texture = ExtResource("5_87xkg")
+
+[node name="launch" type="Button" parent="."]
+offset_left = 365.0
+offset_top = 617.0
+offset_right = 468.0
+offset_bottom = 654.0
+text = "Зажигание"
+
+[node name="Gas" type="Button" parent="."]
+offset_left = 791.0
+offset_top = 614.0
+offset_right = 894.0
+offset_bottom = 652.0
+text = "Газ
+"
+
+[node name="Akb" type="Sprite2D" parent="."]
+position = Vector2(480, 506)
+scale = Vector2(0.677778, 0.677778)
+texture = ExtResource("7_31vvt")
+
+[node name="Chek" type="Sprite2D" parent="."]
+position = Vector2(756.546, 506.375)
+scale = Vector2(0.163173, 0.163173)
+texture = ExtResource("8_a4b6c")
+
+[node name="Masl" type="Sprite2D" parent="."]
+position = Vector2(619.889, 506)
+scale = Vector2(0.195898, 0.245454)
+texture = ExtResource("9_cva2r")
+
+[node name="Airbag" type="Sprite2D" parent="."]
+position = Vector2(865, 507)
+scale = Vector2(0.627778, 0.627778)
+texture = ExtResource("10_cwfq6")
+
+[node name="Abs" type="Sprite2D" parent="."]
+position = Vector2(812, 507)
+scale = Vector2(0.178144, 0.178143)
+texture = ExtResource("11_82o24")
+
+[node name="Toplivo" type="Sprite2D" parent="."]
+position = Vector2(552, 506)
+scale = Vector2(0.190251, 0.190251)
+texture = ExtResource("12_o5ufv")
+
+[node name="TimerLampAirbag" type="Timer" parent="."]
+one_shot = true
+
+[node name="TimerLampMasl" type="Timer" parent="."]
+one_shot = true
+
+[node name="TimerLampChek" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="pressed" from="launch" to="." method="_on_launch_pressed"]
+[connection signal="button_down" from="Gas" to="." method="_on_gas_button_down"]
+[connection signal="button_up" from="Gas" to="." method="_on_gas_button_up"]
+[connection signal="timeout" from="TimerLampAirbag" to="." method="_on_timer_lamp_timeout"]
+[connection signal="timeout" from="TimerLampMasl" to="." method="_on_timer_lamp_masl_timeout"]
+[connection signal="timeout" from="TimerLampChek" to="." method="_on_timer_lamp_chek_timeout"]
