@@ -11,13 +11,22 @@ var timeTemp = 0
 var error = 0
 var rng = RandomNumberGenerator.new()
 var timer_starta = 0
+var motor_sound =false
+var probeg
 
 
 
 func _ready():
 	randomize()
+	error = rng.randi_range(0, 2)
 	stop_lamp()
-	$Label.set("text", "0" + str(20354)) # Пробег
+	probeg = rng.randi_range(10000, 99999)
+	$Label.set("text", "0" + str(probeg)) # Пробег
+	$diagnostics.visible = false
+	$diagnostics/probeg.set("text", "Пробег: " + str(probeg))
+	$diagnostics/motochas.set("text", "Моточасы: " + str(probeg/10000*365*2) + " моточасов")
+	$CheckButton.disabled = true
+	$Label2.set("text", str(error))
 	pass 
 
 
@@ -37,15 +46,20 @@ func process_lamp():
 
 
 func _process(delta):
+	Sound()
 	process_lamp()
-						
 	if buttLaunch:
 		if buttGas:
 			_on_gas_button_down()
 		else:
 			_on_gas_button_up()
 	starter()
+	
 	if timer_starta == 19:
+		Motor()
+	elif timer_starta == 39:
+		Motor()
+	elif timer_starta == 40:
 		Motor()
 	$Panel/Temp.set("rotation", temp)
 	$Panel/Centr.set("rotation", gas)
@@ -60,6 +74,13 @@ func _on_gas_button_down():
 		buttGas = true
 	pass 
 
+func Sound():
+	if buttGas:
+		$Motor2.play()
+	else:
+		$Motor2.stop()
+	pass
+		
 
 func _on_gas_button_up():
 	if buttLaunch:
@@ -89,13 +110,14 @@ func acc():
 	$launch.set("text", "Запуск")
 	buttAcc = true
 	start_lamp()
+	$CheckButton.disabled = false
 	
 func launch():
 	$launch.set("text", "Выключить")	
 	$Timer0_5sek.start()
 	$Starter.play()
 	_on_timer_0_5_sek_timeout()
-	starter()		
+	starter()
 	buttLaunch = true		
 	$TimerLampMasl.start()
 	$TimerLampChek.start()
@@ -113,18 +135,32 @@ func off_acc():
 	buttAcc = false
 	buttLaunch = false
 	stop_lamp()
+	$Motor.stop()
 
 func starter():
-	if timer_starta == 20: # работа стартера
-		$Timer0_5sek.stop()
-		timer_starta = 0
-		if error == 0:
-			Motor()
-		$Starter.stop()
+	if error == 0:
+		if timer_starta == 20: # работа стартера
+			$Timer0_5sek.stop()
+			timer_starta = 0
+			$Starter.stop()
+	elif error == 1:
+		if timer_starta == 40: # работа стартера
+			$Timer0_5sek.stop()
+			timer_starta = 0
+			$Starter.stop()
+	elif error == 2:
+		if timer_starta == 40: # работа стартера
+			$Timer0_5sek.stop()
+			timer_starta = 0
+			gas = -1
+			$Starter.stop()
+	
 	
 func Motor():
 	gas = -0.75
 	$Motor.play()
+	if error == 2:
+		$Motor.stop()
 
 func launch_norm():
 	if buttAcc == false and buttLaunch == false:
@@ -135,17 +171,35 @@ func launch_norm():
 		off_acc()
 		
 func launch_error_1():
-	rng.randomize()
 	if buttAcc == false and buttLaunch == false:
 		acc()
 	elif buttLaunch == false and buttAcc:
 		$launch.set("text", "Выключить")	
-		starter()
-		#gas = rng.randf_range(-1, 0.1)
-		#gas = -0.88  # 400 оборотов
+		$Timer0_5sek.start()
+		$Starter.play()
+		_on_timer_0_5_sek_timeout()
+		starter()		
 		buttLaunch = true		
-		start_lamp()
-	elif buttAcc and buttLaunch:
+		$TimerLampMasl.start()
+		$Akb.visible = false
+		$Airbag.visible = false
+		$Abs.visible = false
+		$TimerTemp.start()
+		_on_timer_temp_timeout()
+	elif buttAcc and buttLaunch:		
+		off_acc()
+		
+func launch_error_2():
+	if buttAcc == false and buttLaunch == false:
+		acc()
+	elif buttLaunch == false and buttAcc:
+		$launch.set("text", "Выключить")	
+		$Timer0_5sek.start()
+		$Starter.play()
+		_on_timer_0_5_sek_timeout()
+		starter()		
+		buttLaunch = false
+	elif buttAcc and buttLaunch == false:		
 		off_acc()
 
 
@@ -154,6 +208,8 @@ func _on_launch_pressed():
 		launch_norm()
 	elif error == 1:
 		launch_error_1()
+	elif error == 2:
+		launch_error_2()
 	pass 
 
 
@@ -186,11 +242,19 @@ func _on_timer_temp_timeout():
 func _on_timer_0_5_sek_timeout():
 	timer_starta += 1  # работа стартера
 	gas = rng.randf_range(-0.85, -0.88)
-	
-	
 
 
 
-
-
-
+func _on_check_button_toggled(button_pressed):
+	if button_pressed:
+		$diagnostics.visible = true
+	else:
+		$diagnostics.visible = false
+		
+	if error == 0:
+		$diagnostics/error.set("text", "Ошибок не обнаружено")
+	elif error == 1:
+		$diagnostics/error.set("text", "Ошибка двигателя, запуск затруднен")
+	elif  error == 2:
+		$diagnostics/error.set("text", "Ошибка двигателя, запуск невозможен")
+	pass # Replace with function body.

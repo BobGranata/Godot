@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://da058yqr4j5g7"]
+[gd_scene load_steps=18 format=3 uid="uid://da058yqr4j5g7"]
 
 [ext_resource type="Texture2D" uid="uid://cf0bwufjaesfi" path="res://Exterior/Speedometer/Panel2.png" id="1_61t5y"]
 [ext_resource type="Script" path="res://panel_pribor.gd" id="1_aa6de"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://bvlw53dlu6d4" path="res://Exterior/Speedometer/abs.png" id="11_82o24"]
 [ext_resource type="Texture2D" uid="uid://ntj5fidf00nn" path="res://Exterior/Speedometer/toplivo.png" id="12_o5ufv"]
 [ext_resource type="AudioStream" uid="uid://covufhjxse30m" path="res://Sound/starter.mp3" id="14_0inuf"]
+[ext_resource type="AudioStream" uid="uid://dxijd2gq0wnmw" path="res://Sound/motor2.wav" id="14_34luo"]
 [ext_resource type="AudioStream" uid="uid://b0jpx473b7mkm" path="res://Sound/dvigat.wav" id="14_t2wwf"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_u50a7"]
@@ -125,11 +126,97 @@ wait_time = 0.068
 
 [node name="TimerLampChek" type="Timer" parent="."]
 
+[node name="Motor2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("14_34luo")
+
 [node name="Motor" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("14_t2wwf")
 
 [node name="Starter" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("14_0inuf")
+
+[node name="CheckButton" type="CheckButton" parent="."]
+offset_left = 1003.0
+offset_top = 615.0
+offset_right = 1156.0
+offset_bottom = 648.0
+text = "Диагностика"
+
+[node name="diagnostics" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 402.0
+offset_top = 156.0
+offset_right = 839.0
+offset_bottom = 410.0
+
+[node name="ColorRect" type="ColorRect" parent="diagnostics"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 1.0
+offset_right = 440.0
+offset_bottom = 255.0
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="diagnostics"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 58.0
+offset_right = 422.0
+offset_bottom = 240.0
+color = Color(0.172549, 0.172549, 0.172549, 1)
+
+[node name="Zagolovok" type="Label" parent="diagnostics"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 120.0
+offset_bottom = 43.0
+text = "Диагностика автомобиля:"
+
+[node name="VIN" type="Label" parent="diagnostics"]
+layout_mode = 0
+offset_left = 250.0
+offset_top = 20.0
+offset_right = 414.0
+offset_bottom = 43.0
+
+[node name="Zagolovok_error" type="Label" parent="diagnostics"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 60.0
+offset_right = 60.0
+offset_bottom = 83.0
+text = "Ошибки"
+
+[node name="error" type="Label" parent="diagnostics"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 90.0
+offset_right = 60.0
+offset_bottom = 113.0
+
+[node name="probeg" type="Label" parent="diagnostics"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 125.0
+offset_right = 60.0
+offset_bottom = 148.0
+text = "Пробег: "
+
+[node name="motochas" type="Label" parent="diagnostics"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 156.0
+offset_right = 60.0
+offset_bottom = 179.0
+text = "Моточасы: "
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 64.0
+offset_top = 32.0
+offset_right = 104.0
+offset_bottom = 55.0
 
 [connection signal="pressed" from="launch" to="." method="_on_launch_pressed"]
 [connection signal="button_down" from="Gas" to="." method="_on_gas_button_down"]
@@ -139,3 +226,5 @@ stream = ExtResource("14_0inuf")
 [connection signal="timeout" from="Timer0_5sek" to="." method="_on_timer_0_5_sek_timeout"]
 [connection signal="timeout" from="TimerTemp" to="." method="_on_timer_temp_timeout"]
 [connection signal="timeout" from="TimerLampChek" to="." method="_on_timer_lamp_chek_timeout"]
+[connection signal="pressed" from="CheckButton" to="." method="_on_check_button_pressed"]
+[connection signal="toggled" from="CheckButton" to="." method="_on_check_button_toggled"]
