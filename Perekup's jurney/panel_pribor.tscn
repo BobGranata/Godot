@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://da058yqr4j5g7"]
+[gd_scene load_steps=17 format=3 uid="uid://da058yqr4j5g7"]
 
 [ext_resource type="Texture2D" uid="uid://cf0bwufjaesfi" path="res://Exterior/Speedometer/Panel2.png" id="1_61t5y"]
 [ext_resource type="Script" path="res://panel_pribor.gd" id="1_aa6de"]
@@ -13,6 +13,8 @@
 [ext_resource type="Texture2D" uid="uid://bfhfeep5ysgmk" path="res://Exterior/Speedometer/airbag.png" id="10_cwfq6"]
 [ext_resource type="Texture2D" uid="uid://bvlw53dlu6d4" path="res://Exterior/Speedometer/abs.png" id="11_82o24"]
 [ext_resource type="Texture2D" uid="uid://ntj5fidf00nn" path="res://Exterior/Speedometer/toplivo.png" id="12_o5ufv"]
+[ext_resource type="AudioStream" uid="uid://covufhjxse30m" path="res://Sound/starter.mp3" id="14_0inuf"]
+[ext_resource type="AudioStream" uid="uid://b0jpx473b7mkm" path="res://Sound/dvigat.wav" id="14_t2wwf"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_u50a7"]
 font_size = 26
@@ -116,14 +118,24 @@ texture = ExtResource("12_o5ufv")
 
 [node name="TimerLampMasl" type="Timer" parent="."]
 
+[node name="Timer0_5sek" type="Timer" parent="."]
+wait_time = 0.068
+
 [node name="TimerTemp" type="Timer" parent="."]
 
 [node name="TimerLampChek" type="Timer" parent="."]
+
+[node name="Motor" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("14_t2wwf")
+
+[node name="Starter" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("14_0inuf")
 
 [connection signal="pressed" from="launch" to="." method="_on_launch_pressed"]
 [connection signal="button_down" from="Gas" to="." method="_on_gas_button_down"]
 [connection signal="button_up" from="Gas" to="." method="_on_gas_button_up"]
 [connection signal="timeout" from="TimerLampAirbag" to="." method="_on_timer_lamp_timeout"]
 [connection signal="timeout" from="TimerLampMasl" to="." method="_on_timer_lamp_masl_timeout"]
+[connection signal="timeout" from="Timer0_5sek" to="." method="_on_timer_0_5_sek_timeout"]
 [connection signal="timeout" from="TimerTemp" to="." method="_on_timer_temp_timeout"]
 [connection signal="timeout" from="TimerLampChek" to="." method="_on_timer_lamp_chek_timeout"]
