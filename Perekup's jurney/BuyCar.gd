@@ -1,9 +1,9 @@
 extends Node2D
 
-const base_models = preload("res://base_script.gd")
-
-const SAVE_PATH = "res://car_adv.json"
 signal start_check
+signal level_changed(level_name)
+
+const base_models = preload("res://base_script.gd")
 
 var choose_items = []
 
@@ -13,8 +13,6 @@ var m_mismatch : base_models.mismatch_class
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-#	load_game()	
-
 	var dict_car = BaseScript.get_currect_car()
 	
 	var dict_pts = dict_car[BaseScript.PTS]
@@ -23,7 +21,6 @@ func _ready():
 	$Pts.set_data_dict(dict_pts)
 	$Phone.set_data_dict(dict_advert)
 	$CarView.set_data_dict(dict_car)
-	pass
 	
 func _draw():
 	pass
@@ -101,135 +98,6 @@ func move_doc(type_doc):
 	elif type_doc == base_models.PHONE :
 		$Pts.set("z_index", 0)
 		$Phone.set("z_index", 1)
-
-# `load()` is reserved.
-func load_game_json():
-	var file = FileAccess.open(SAVE_PATH, FileAccess.READ)
-	var test_json_conv = JSON.new()
-	test_json_conv.parse(file.get_as_text())
-	var save_dict = test_json_conv.get_data()
-	
-	var root = save_dict.advertisement
-	
-#	var idPts = str_to_var(root.pts.id)
-	var modelPts= root.pts.model
-	var vinPts = root.pts.vin
-	var colorPts = root.pts.color
-	var volume_pts = root.pts.volume
-	var number_pts = root.pts.number	
-
-	$Pts.set_data(modelPts, vinPts, colorPts, volume_pts, number_pts)
-	
-#	var idAd = str_to_var(root.pts.id)
-	var modelAd = root.adv.model
-	var vinAd = root.adv.vin
-	var colorAd = root.adv.color	
-	
-	$Phone.set_data(modelAd, vinAd, colorAd)
-
-	var engine = base_models.engine_class.new()
-	engine.volume = root.car.engine.volume
-	engine.number = root.car.engine.number
-	$CarView.set_data(engine)
-	
-	
-	m_mismatch = base_models.mismatch_class.new()
-	m_mismatch.type_doc_first = str_to_var(root.mismatch.type_first)
-	m_mismatch.type_doc_second = str_to_var(root.mismatch.type_second)
-	m_mismatch.field = str_to_var(root.mismatch.field)
-	
-	$CarView.set_data(engine)	
-	
-func load_game():
-	randomize()
-	
-	var base = base_models.new()
-	var vin = base.generate_value(base.VIN)
-	var color = base.generate_value(base.COLOR)
-	var model = base.generate_value(base.MODEL)
-	var volume = base.generate_value(base.VOLUME)
-	var number = base.generate_value(base.ENGINE_NUMBER)
-	
-	var dict_pts = {}
-	dict_pts[base.MODEL] = model
-	dict_pts[base.VIN] = vin
-	dict_pts[base.COLOR] = color
-	dict_pts[base.VOLUME] = volume
-	dict_pts[base.ENGINE_NUMBER] = number
-	
-	var dict_advert = {}
-	dict_advert[base.MODEL] = model
-	dict_advert[base.VIN] = vin
-	dict_advert[base.COLOR] = color
-#	dict_advert[base.VOLUME] = volume
-	
-	var dict_engine_plate = {}
-	dict_engine_plate[base.ENGINE_NUMBER] = number	
-	dict_engine_plate[base.VOLUME] = volume	
-	
-	var dictVinPlate = {}
-	dictVinPlate[base.MODEL] = model
-	dictVinPlate[base.VIN] = vin
-	dictVinPlate[base.COLOR] = color
-	
-	var dict_buy_car = {base.PTS: dict_pts, 
-						base.PHONE: dict_advert, 
-						base.ENGINE_PLATE: dict_engine_plate, 
-						base.VIN_PLATE: dictVinPlate }
-	
-	var doc_count = dict_buy_car.size()
-	# С вероятностью 1/4 будет ошибка
-#	if randi() % 4 == 3 :
-	if true:
-		var mismatch_doc_1 = randi() % doc_count
-		var mismatch_doc_2 = randi() % doc_count
-		
-		if (mismatch_doc_1 == mismatch_doc_2) :
-			if mismatch_doc_1 + 1 <= doc_count :
-				++mismatch_doc_1
-			elif mismatch_doc_1 - 1 >= 1 :
-				--mismatch_doc_1
-						
-		var doc_dictionary_1 = dict_buy_car[mismatch_doc_1]
-		var doc_dictionary_2 = dict_buy_car[mismatch_doc_2]
-		var doc_dictionary_cross = intersect_arrays(doc_dictionary_1, doc_dictionary_2)
-		var size_cross = doc_dictionary_cross.size()
-		
-		if size_cross:		
-			var mismatch
-			if size_cross == 1:			
-				mismatch = doc_dictionary_cross[0]
-			else:
-				mismatch = doc_dictionary_cross[randi() % size_cross]
-				
-			if randi() % 2 == 1:
-				doc_dictionary_1[mismatch] = base.generate_value(mismatch)
-			else:
-				doc_dictionary_2[mismatch] = base.generate_value(mismatch)
-				
-			if (doc_dictionary_1[mismatch] != doc_dictionary_2[mismatch]):				
-				m_mismatch = base_models.mismatch_class.new()
-				m_mismatch.type_doc_first = mismatch_doc_1
-				m_mismatch.type_doc_second = mismatch_doc_2
-				m_mismatch.field = mismatch
-
-				print(m_mismatch.type_doc_first)
-				print(m_mismatch.type_doc_second)
-				print(m_mismatch.field)
-				
-#				$VBoxContainer/LabelTest1.text
-#				$VBoxContainer/LabelTest2.text
-#				$VBoxContainer/LabelTest3.text
-			else:
-				m_mismatch = null
-				print(null)
-		else:
-			m_mismatch = null
-			print(null)
-	
-	$Pts.set_data_dict(dict_pts)
-	$Phone.set_data_dict(dict_advert)
-	$CarView.set_data_dict(dict_buy_car)
 
 func _on_BtnStartCheck_pressed():
 	if !check_mode :
