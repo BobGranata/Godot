@@ -27,6 +27,7 @@ func _ready():
 	$diagnostics/motochas.set("text", "Моточасы: " + str(probeg/10000*365*2) + " моточасов")
 	$CheckButton.disabled = true
 	$Label2.set("text", str(error))
+	$car_inspection.visible = false
 	pass 
 
 
@@ -135,7 +136,13 @@ func off_acc():
 	buttAcc = false
 	buttLaunch = false
 	stop_lamp()
-	$Motor.stop()
+	if error == 0:
+		$Motor.stop()
+	elif error == 1:
+		$slomMotor.stop()
+	$diagnostics.visible = false
+	$CheckButton.disabled = true
+	$CheckButton.button_pressed = false
 
 func starter():
 	if error == 0:
@@ -158,8 +165,11 @@ func starter():
 	
 func Motor():
 	gas = -0.75
-	$Motor.play()
-	if error == 2:
+	if error == 0:
+		$Motor.play()
+	elif error == 1:
+		$slomMotor.play()
+	elif error == 2:
 		$Motor.stop()
 
 func launch_norm():
@@ -192,7 +202,7 @@ func launch_error_1():
 func launch_error_2():
 	if buttAcc == false and buttLaunch == false:
 		acc()
-	elif buttLaunch == false and buttAcc:
+	elif buttLaunch == false and buttAcc and $launch.get("text") == "Запуск":
 		$launch.set("text", "Выключить")	
 		$Timer0_5sek.start()
 		$Starter.play()
@@ -257,4 +267,13 @@ func _on_check_button_toggled(button_pressed):
 		$diagnostics/error.set("text", "Ошибка двигателя, запуск затруднен")
 	elif  error == 2:
 		$diagnostics/error.set("text", "Ошибка двигателя, запуск невозможен")
+	pass # Replace with function body.
+
+
+func _on_check_button_2_toggled(button_pressed):
+	if button_pressed:
+		$car_inspection.visible = true
+	else :
+		$car_inspection.visible = false
+	
 	pass # Replace with function body.
