@@ -7,7 +7,9 @@ var m_ad_id : int
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	$Order.set_data()	
 	
+	m_ad_id = -1	
 	var dict_car = BaseScript.m_dict_car
 	
 	for item_buy_car in dict_car:		
@@ -31,6 +33,7 @@ func cleanup():
 func set_ad_id(ad_id):
 	if ad_id != m_ad_id:
 		emit_signal("reset_selection", ad_id)
+	$Button2.set("disabled", false)
 	m_ad_id = ad_id	
 
 func _on_button_2_pressed():	

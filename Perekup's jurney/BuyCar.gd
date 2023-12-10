@@ -112,20 +112,10 @@ func _on_BtnStartCheck_pressed():
 		$Info.text = ""
 		$BtnStartCheck.text = '?'
 
-func intersect_arrays(arr1, arr2):
-	var arr2_dict = {}
-	for v in arr2:
-		arr2_dict[v] = true
-
-	var in_both_arrays = []
-	for v in arr1:
-		if arr2_dict.get(v, false):
-			in_both_arrays.append(v)
-	return in_both_arrays
-
 func _on_button_pressed():
-	load_game()	
-	pass # Replace with function body.
+	BaseScript.check_order()
+	emit_signal("level_changed", "Room/room")
 
 func _on_button_2_pressed():
-	pass # Replace with function body.
+	BaseScript.delete_currect_car()
+	emit_signal("level_changed", "Room/desk")
