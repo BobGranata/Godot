@@ -2,7 +2,9 @@ extends CanvasLayer
 
 signal level_changed(level_name)
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready():	
+	if BaseScript.m_result_order.size() > 0:
+		$Order.show_result()
 	BaseScript.load_game()
 	pass # Replace with function body.
 

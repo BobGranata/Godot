@@ -14,29 +14,49 @@ offset_right = 368.0
 offset_bottom = 493.0
 color = Color(1, 1, 0.913725, 1)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 17.0
-offset_right = 23.0
-offset_bottom = 73.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="MarginContainer" type="MarginContainer" parent="ColorRect"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 30
 
-[node name="Label" type="Label" parent="ColorRect/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/MarginContainer"]
+layout_mode = 2
+
+[node name="lblTitle" type="Label" parent="ColorRect/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Заказ"
 label_settings = SubResource("LabelSettings_w51tb")
 
-[node name="Label2" type="Label" parent="ColorRect/VBoxContainer"]
+[node name="Model" type="Label" parent="ColorRect/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Test"
 
-[node name="Label3" type="Label" parent="ColorRect/VBoxContainer"]
+[node name="Color" type="Label" parent="ColorRect/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Test"
+
+[node name="Button" type="Button" parent="ColorRect"]
+visible = false
+offset_left = 149.0
+offset_top = 426.0
+offset_right = 215.0
+offset_bottom = 456.0
+text = "Ok"
+
+[node name="lbResultMoney" type="Label" parent="ColorRect"]
+visible = false
+layout_mode = 0
+offset_left = 20.0
+offset_top = 352.0
+offset_right = 60.0
+offset_bottom = 375.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 20
+text = "Result money"
+
+[connection signal="pressed" from="ColorRect/Button" to="." method="_on_button_pressed"]

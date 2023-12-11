@@ -59,9 +59,16 @@ func generate_value(key):
 		return generate_word(characters, 5)
 
 var m_dict_car = {}
-var m_current_car_id
+var order_model = {}
+var m_result_order = {}
 
-func load_game():
+var m_current_car_id
+var m_bank_account
+
+
+
+func load_game():		 
+	load_order()	
 	for i in 10:
 		load_car(i)
 
@@ -70,6 +77,24 @@ func set_car_id(id : int):
 	
 func get_currect_car():
 	return m_dict_car[m_current_car_id]
+	
+func delete_currect_car():
+	m_dict_car.erase(m_current_car_id)	
+
+func load_order():
+#	Модель
+#	Год выпуска
+#	Пробег
+#	Количество владельцев
+#	Цена	
+	order_model[MODEL] = generate_value(MODEL)
+	order_model[COLOR] = generate_value(COLOR)
+#	order_model[MELEAGE] = generate_value(MELEAGE)
+#	order_model[OWNERS] = generate_value(OWNERS)
+#	order_model[YEAR] = generate_value(YEAR)
+#	order_model[COST] = generate_value(COST)
+#	order_model[VOLUME] = generate_value(VOLUME)
+	
 
 func load_car(car_id):
 	randomize()
@@ -167,3 +192,69 @@ func intersect_arrays(arr1, arr2):
 		if arr2_dict.get(v, false):
 			in_both_arrays.append(v)
 	return in_both_arrays
+
+func check_order():
+	[BaseScript.MODEL]
+	order_model[BaseScript.COLOR]
+		
+	var compare_car = get_currect_car()	
+	
+#	var pts_compare = compare_car[PTS]
+#	var doc_dictionary_cross = intersect_arrays(order_model, pts_compare)
+#	for compare_key in doc_dictionary_cross:
+#		if order_model[compare_key] != pts_compare[compare_key]:
+#			result_order[compare_key] = false
+#		else:
+#			result_order[compare_key] = true
+			
+	for buy_car_model_type in compare_car:
+		var buy_car_model = compare_car[buy_car_model_type]
+		var doc_dictionary_cross = intersect_arrays(order_model, buy_car_model)
+		for compare_key in doc_dictionary_cross:
+			if order_model[compare_key] != buy_car_model[compare_key]:
+				m_result_order[compare_key] = false
+			else:
+				m_result_order[compare_key] = true		
+	
+#	var dict_buy_car = {PTS: dict_pts, 
+#						PHONE: dict_advert, 
+#						ENGINE_PLATE: dict_engine_plate, 
+#						VIN_PLATE: dictVinPlate }	
+
+#func load_game_json():
+#	const SAVE_PATH = "res://car_adv.json"
+#
+#	var file = FileAccess.open(SAVE_PATH, FileAccess.READ)
+#	var test_json_conv = JSON.new()
+#	test_json_conv.parse(file.get_as_text())
+#	var save_dict = test_json_conv.get_data()
+#
+#	var root = save_dict.advertisement
+#
+##	var idPts = str_to_var(root.pts.id)
+#	var modelPts= root.pts.model
+#	var vinPts = root.pts.vin
+#	var colorPts = root.pts.color
+#	var volume_pts = root.pts.volume
+#	var number_pts = root.pts.number	
+#
+#	$Pts.set_data(modelPts, vinPts, colorPts, volume_pts, number_pts)
+#
+##	var idAd = str_to_var(root.pts.id)
+#	var modelAd = root.adv.model
+#	var vinAd = root.adv.vin
+#	var colorAd = root.adv.color	
+#
+#	$Phone.set_data(modelAd, vinAd, colorAd)
+#
+#	var engine = base_models.engine_class.new()
+#	engine.volume = root.car.engine.volume
+#	engine.number = root.car.engine.number
+#	$CarView.set_data(engine)
+#
+#	m_mismatch = base_models.mismatch_class.new()
+#	m_mismatch.type_doc_first = str_to_var(root.mismatch.type_first)
+#	m_mismatch.type_doc_second = str_to_var(root.mismatch.type_second)
+#	m_mismatch.field = str_to_var(root.mismatch.field)
+#
+#	$CarView.set_data(engine)	
