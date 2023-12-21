@@ -114,8 +114,14 @@ func _on_BtnStartCheck_pressed():
 
 func _on_button_pressed():
 	BaseScript.check_order()
-	emit_signal("level_changed", "Room/room")
+	
+	$Shade.set("visible", true)
+	$Shade/Order.show_result()
 
 func _on_button_2_pressed():
 	BaseScript.delete_currect_car()
+	emit_signal("level_changed", "Room/desk")
+
+
+func _on_order_close_order_result():
 	emit_signal("level_changed", "Room/desk")

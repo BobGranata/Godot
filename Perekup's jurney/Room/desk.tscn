@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://5tbdxkl2oe4r"]
+[gd_scene load_steps=41 format=3 uid="uid://5tbdxkl2oe4r"]
 
 [ext_resource type="Script" path="res://Room/desk.gd" id="1_4hkku"]
 [ext_resource type="Texture2D" uid="uid://cyre1m1ap33dv" path="res://Room/desk.jpg" id="1_y7tfr"]
@@ -39,14 +39,6 @@
 [ext_resource type="Texture2D" uid="uid://c2hskfdumc8sd" path="res://Sprites/ride/feff325c011147f5839f177a269ed75bypYV7xcpbCp2CpqE-33.jpg" id="37_cappr"]
 [ext_resource type="Texture2D" uid="uid://3v5sj2tdjgan" path="res://Sprites/ride/feff325c011147f5839f177a269ed75bypYV7xcpbCp2CpqE-34.jpg" id="38_nopaq"]
 [ext_resource type="Texture2D" uid="uid://dx3iknrvg56wv" path="res://Sprites/ride/feff325c011147f5839f177a269ed75bypYV7xcpbCp2CpqE-35.jpg" id="39_2walx"]
-
-[sub_resource type="Animation" id="Animation_n8613"]
-resource_name = "riding"
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_h0ku3"]
-_data = {
-"riding": SubResource("Animation_n8613")
-}
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_qhi6i"]
 animations = [{
@@ -159,7 +151,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("39_2walx")
 }],
-"loop": true,
+"loop": false,
 "name": &"default",
 "speed": 9.0
 }]
@@ -206,18 +198,15 @@ offset_left = 568.0
 offset_top = 744.0
 offset_right = 805.0
 offset_bottom = 784.0
-disabled = true
 text = "Поехать на осмотр машины"
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_h0ku3")
-}
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 visible = false
 position = Vector2(640, 400)
 sprite_frames = SubResource("SpriteFrames_qhi6i")
+frame = 13
+frame_progress = 0.00718524
 
 [connection signal="gui_input" from="Button" to="." method="_on_button_gui_input"]
 [connection signal="pressed" from="Button2" to="." method="_on_button_2_pressed"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

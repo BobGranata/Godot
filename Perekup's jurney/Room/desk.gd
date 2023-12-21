@@ -7,9 +7,13 @@ var m_ad_id : int
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	
+	BaseScript.load_game()	
+	
 	$Order.set_data()	
 	
-	m_ad_id = -1	
+#	m_ad_id = -1	
+	m_ad_id = 0
 	var dict_car = BaseScript.m_dict_car
 	
 	for item_buy_car in dict_car:		
@@ -37,5 +41,9 @@ func set_ad_id(ad_id):
 	m_ad_id = ad_id	
 
 func _on_button_2_pressed():	
+	$AnimatedSprite2D.set("visible", true)
+	$AnimatedSprite2D.play()
+
+func _on_animated_sprite_2d_animation_finished():
 	BaseScript.set_car_id(m_ad_id)
 	emit_signal("level_changed", "BuyCar")

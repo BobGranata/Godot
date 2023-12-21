@@ -59,6 +59,7 @@ func generate_value(key):
 		return generate_word(characters, 5)
 
 var m_dict_car = {}
+var m_current_car = {}
 var order_model = {}
 var m_result_order = {}
 
@@ -69,8 +70,8 @@ var m_bank_account
 
 func load_game():		 
 	load_order()	
-	for i in 10:
-		load_car(i)
+	for i in 1:
+		load_car_by_order()
 
 func set_car_id(id : int):
 	m_current_car_id = id
@@ -95,6 +96,94 @@ func load_order():
 #	order_model[COST] = generate_value(COST)
 #	order_model[VOLUME] = generate_value(VOLUME)
 	
+func load_car_by_order():
+	randomize()	
+	
+	var vin = generate_value(VIN)
+	var color = generate_value(COLOR)
+	var model = generate_value(MODEL)
+	var volume = generate_value(VOLUME)
+	var number = generate_value(ENGINE_NUMBER)
+	
+	color = order_model[COLOR]
+	model = order_model[MODEL]	
+	
+	var dict_pts = {}
+	dict_pts[MODEL] = model
+	dict_pts[VIN] = vin
+	dict_pts[COLOR] = color
+	dict_pts[VOLUME] = volume
+	dict_pts[ENGINE_NUMBER] = number
+	
+	var dict_advert = {}
+	dict_advert[MODEL] = model
+	dict_advert[VIN] = vin
+	dict_advert[COLOR] = color
+	dict_advert[VOLUME] = volume
+	
+	var dict_engine_plate = {}
+	dict_engine_plate[ENGINE_NUMBER] = number	
+	dict_engine_plate[VOLUME] = volume	
+	
+	var dictVinPlate = {}
+	dictVinPlate[MODEL] = model
+	dictVinPlate[VIN] = vin
+	dictVinPlate[COLOR] = color
+	
+	var dict_buy_car = {PTS: dict_pts, 
+						PHONE: dict_advert, 
+						ENGINE_PLATE: dict_engine_plate, 
+						VIN_PLATE: dictVinPlate }
+	
+	var doc_count = dict_buy_car.size()
+	# С вероятностью 1/4 будет ошибка
+#	if randi() % 4 == 3 :
+	if true:
+		var mismatch_doc_1 = randi() % doc_count
+		var mismatch_doc_2 = randi() % doc_count
+		
+		if (mismatch_doc_1 == mismatch_doc_2) :
+			if mismatch_doc_1 + 1 <= doc_count :
+				++mismatch_doc_1
+			elif mismatch_doc_1 - 1 >= 1 :
+				--mismatch_doc_1
+						
+		var doc_dictionary_1 = dict_buy_car[mismatch_doc_1]
+		var doc_dictionary_2 = dict_buy_car[mismatch_doc_2]
+		var doc_dictionary_cross = intersect_arrays(doc_dictionary_1, doc_dictionary_2)
+		var size_cross = doc_dictionary_cross.size()
+		
+		var m_mismatch = null
+		if size_cross:		
+			var mismatch
+			if size_cross == 1:			
+				mismatch = doc_dictionary_cross[0]
+			else:
+				mismatch = doc_dictionary_cross[randi() % size_cross]
+				
+			if randi() % 2 == 1:
+				doc_dictionary_1[mismatch] = generate_value(mismatch)
+			else:
+				doc_dictionary_2[mismatch] = generate_value(mismatch)
+				
+			if (doc_dictionary_1[mismatch] != doc_dictionary_2[mismatch]):				
+				m_mismatch = mismatch_class.new()
+				m_mismatch.type_doc_first = mismatch_doc_1
+				m_mismatch.type_doc_second = mismatch_doc_2
+				m_mismatch.field = mismatch
+
+				print(m_mismatch.type_doc_first)
+				print(m_mismatch.type_doc_second)
+				print(m_mismatch.field)
+				
+			else:
+				m_mismatch = null
+				print(null)
+		else:
+			m_mismatch = null
+			print(null)	
+	
+	m_dict_car[0] = dict_buy_car
 
 func load_car(car_id):
 	randomize()
@@ -194,19 +283,8 @@ func intersect_arrays(arr1, arr2):
 	return in_both_arrays
 
 func check_order():
-	[BaseScript.MODEL]
-	order_model[BaseScript.COLOR]
-		
 	var compare_car = get_currect_car()	
 	
-#	var pts_compare = compare_car[PTS]
-#	var doc_dictionary_cross = intersect_arrays(order_model, pts_compare)
-#	for compare_key in doc_dictionary_cross:
-#		if order_model[compare_key] != pts_compare[compare_key]:
-#			result_order[compare_key] = false
-#		else:
-#			result_order[compare_key] = true
-			
 	for buy_car_model_type in compare_car:
 		var buy_car_model = compare_car[buy_car_model_type]
 		var doc_dictionary_cross = intersect_arrays(order_model, buy_car_model)

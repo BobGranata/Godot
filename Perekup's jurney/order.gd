@@ -1,5 +1,7 @@
 extends Node2D
 
+signal close_order_result
+
 var m_dict_order
 
 @onready var model_view = $ColorRect/MarginContainer/VBoxContainer/Model
@@ -60,3 +62,5 @@ func _on_button_pressed():
 	$ColorRect/Button.set("visible", false)
 
 	BaseScript.m_result_order.clear()
+	
+	emit_signal("close_order_result")
