@@ -341,14 +341,21 @@ func intersect_arrays(arr1, arr2):
 func check_order():
 	var compare_car = get_currect_car()	
 	
+	for order_item in order_model:
+		m_result_order[order_item] = true
+	
 	for buy_car_model_type in compare_car:
 		var buy_car_model = compare_car[buy_car_model_type]
 		var doc_dictionary_cross = intersect_arrays(order_model, buy_car_model)
 		for compare_key in doc_dictionary_cross:
-			if order_model[compare_key] != buy_car_model[compare_key]:
+			if	compare_key == YEAR:
+				if int(order_model[compare_key]) > int(buy_car_model[compare_key]):
+						m_result_order[compare_key] = false
+			if  compare_key == MELEAGE || compare_key == OWNERS || compare_key ==  COST:
+				if int(order_model[compare_key]) < int(buy_car_model[compare_key]):
+					m_result_order[compare_key] = false
+			elif order_model[compare_key] != buy_car_model[compare_key]:
 				m_result_order[compare_key] = false
-			else:
-				m_result_order[compare_key] = true		
 	
 #	var dict_buy_car = {PTS: dict_pts, 
 #						PHONE: dict_advert, 
