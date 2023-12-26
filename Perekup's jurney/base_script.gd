@@ -2,6 +2,17 @@ extends Node
 
 enum { NONE, MODEL, MELEAGE, OWNERS, VIN, COLOR, YEAR, COST, VOLUME, ENGINE_NUMBER }
 
+const title_rus = {
+	MODEL: "Модель: ", 
+	MELEAGE: "Пробег: ", 
+	OWNERS: "Владельцы: ", 
+	VIN: "VIN: ", 
+	COLOR: "Цвет: ", 
+	YEAR: "Год выпуска: ", 
+	COST: "Цена: ", 
+	VOLUME: "Объём: ", 
+	ENGINE_NUMBER: "Номер двигателя: "}
+
 enum { PTS, PHONE, ENGINE_PLATE, VIN_PLATE}
 	
 # Called when the node enters the scene tree for the first time.
@@ -36,6 +47,8 @@ var characters = 'abcdefghijklmnopqrstuvwxyz1234567890'
 const car_models = ["Lada", "KIA", "Subaru", "Datsun", "Audi", "Scoda", "Siat", "Jeep", "Toyota", "Ford", "Renault"]
 const car_colors = ["Зелёный", "Красный", "Бежевый", "Синий", "Чёрный", "Белый", "Жёлтный", "Оранжевый", "Голубой"]
 const car_engine_volums = ["1.2", "1.4", "1.6", "1.8", "2.0"]
+const car_class = ["a", "b", "c", "d", "f", "g"]
+const car_price_category = [1, 2, 3, 4, 5]
 
 func generate_word(chars, length):
 	var word: String
@@ -57,6 +70,18 @@ func generate_value(key):
 		return car_engine_volums[randi() % len(car_engine_volums)]
 	elif key == ENGINE_NUMBER:
 		return generate_word(characters, 5)
+		
+	elif key == MELEAGE:
+		return str(randi() % 30 * 10000)
+	elif key == OWNERS:
+		return str(randi() % 3 + 1)
+	elif key == YEAR:
+		var time = Time.get_date_dict_from_system()		
+		var year = time['year']
+		return str(year - randi() % 20)
+	elif key == COST:
+		return str(randi() % 100 * 10000)
+
 
 var m_dict_car = {}
 var m_current_car = {}
@@ -65,6 +90,8 @@ var m_result_order = {}
 
 var m_current_car_id
 var m_bank_account
+
+var m_level : int
 
 
 
@@ -87,26 +114,50 @@ func load_order():
 #	Год выпуска
 #	Пробег
 #	Количество владельцев
-#	Цена	
-	order_model[MODEL] = generate_value(MODEL)
-	order_model[COLOR] = generate_value(COLOR)
-#	order_model[MELEAGE] = generate_value(MELEAGE)
-#	order_model[OWNERS] = generate_value(OWNERS)
-#	order_model[YEAR] = generate_value(YEAR)
-#	order_model[COST] = generate_value(COST)
-#	order_model[VOLUME] = generate_value(VOLUME)
+#	Цена		
+
+	m_level = 5
+	if m_level >= 1:
+		order_model[MODEL] = generate_value(MODEL)
+		order_model[COLOR] = generate_value(COLOR)
+	if m_level >= 2:
+		order_model[YEAR] = generate_value(YEAR)
+	if m_level >= 3:
+		order_model[VOLUME] = generate_value(VOLUME)
+	if m_level >= 4:
+		order_model[OWNERS] = generate_value(OWNERS)
+	if m_level >= 5:
+		order_model[MELEAGE] = generate_value(MELEAGE)
+	if m_level >= 6:	
+		order_model[COST] = generate_value(COST)		
+		
 	
 func load_car_by_order():
 	randomize()	
 	
-	var vin = generate_value(VIN)
-	var color = generate_value(COLOR)
-	var model = generate_value(MODEL)
-	var volume = generate_value(VOLUME)
-	var number = generate_value(ENGINE_NUMBER)
-	
-	color = order_model[COLOR]
-	model = order_model[MODEL]	
+	var generate_data = {VIN: generate_value(VIN),
+							MODEL: generate_value(MODEL),
+							COLOR: generate_value(COLOR),
+							VOLUME: generate_value(VOLUME),
+							YEAR: generate_value(YEAR),
+							MELEAGE: generate_value(MELEAGE),
+							OWNERS: generate_value(OWNERS),
+							COST: generate_value(COST),
+							ENGINE_NUMBER: generate_value(ENGINE_NUMBER)
+							}
+
+	for order_item in order_model:
+		generate_data[order_item] = order_model[order_item]
+		
+	var vin = generate_data[VIN]
+	var model = generate_data[MODEL]
+	var color = generate_data[COLOR]
+	var volume = generate_data[VOLUME]	
+	var year = generate_data[YEAR]
+	var meleage = generate_data[MELEAGE]	
+	var owners = generate_data[OWNERS]
+	var cost = generate_data[COST]	
+	var number = generate_data[ENGINE_NUMBER]	
 	
 	var dict_pts = {}
 	dict_pts[MODEL] = model
@@ -114,12 +165,17 @@ func load_car_by_order():
 	dict_pts[COLOR] = color
 	dict_pts[VOLUME] = volume
 	dict_pts[ENGINE_NUMBER] = number
+
+	dict_pts[YEAR] = year
+	dict_pts[MELEAGE] = meleage
+	dict_pts[OWNERS] = owners
 	
 	var dict_advert = {}
 	dict_advert[MODEL] = model
 	dict_advert[VIN] = vin
 	dict_advert[COLOR] = color
 	dict_advert[VOLUME] = volume
+	dict_advert[COST] = cost
 	
 	var dict_engine_plate = {}
 	dict_engine_plate[ENGINE_NUMBER] = number	

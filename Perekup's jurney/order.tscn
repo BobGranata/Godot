@@ -31,11 +31,13 @@ text = "Заказ"
 label_settings = SubResource("LabelSettings_w51tb")
 
 [node name="Model" type="Label" parent="ColorRect/MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Test"
 
 [node name="Color" type="Label" parent="ColorRect/MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Test"

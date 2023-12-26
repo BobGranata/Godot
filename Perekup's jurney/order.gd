@@ -19,6 +19,22 @@ func _process(delta):
 func set_data():
 	model_view.text = BaseScript.order_model[BaseScript.MODEL]
 	color_view.text = BaseScript.order_model[BaseScript.COLOR]
+	
+	for order_item in BaseScript.order_model:
+		var new_label = Label.new()
+		
+		var title = BaseScript.title_rus[order_item]
+		title += BaseScript.order_model[order_item]
+		new_label.text = title
+		new_label.visible = true
+		new_label.set("theme_override_colors/font_color", "000000")
+		
+		new_label.add_to_group("order_list")
+#		new_car_ad.ad_selected.connect(set_ad_id)
+#		new_car_ad.set_data(item_buy_car)
+#		reset_selection.connect(new_car_ad.reset_item_color)
+		$ColorRect/MarginContainer/VBoxContainer.add_child(new_label)
+		
 #	Модель
 #	Год выпуска
 #	Пробег
@@ -30,18 +46,41 @@ func show_result():
 	$ColorRect/Button.set("visible", true)
 	$ColorRect/lbResultMoney.set("visible", true)
 	
-	BaseScript.m_result_order[BaseScript.MODEL]
-	model_view.text = BaseScript.order_model[BaseScript.MODEL]
-	if (!BaseScript.m_result_order[BaseScript.MODEL]) :
-		model_view.text += " Ошибка"
-	else:
-		model_view.text += " Ok"
+	get_tree().call_group("order_list", "queue_free")	
+#	var order_list_group = get_tree().get_nodes_in_group("order_list")
+	
+	for order_item in BaseScript.order_model:
+#		if order_item != BaseScript.MODEL:
+#			continue
+		var new_label = Label.new()
+				
+		var title = BaseScript.title_rus[order_item]
+		title += BaseScript.order_model[order_item]
+
+		if (!BaseScript.m_result_order[order_item]) :
+			title += " Ошибка"
+		else:
+			title += " Ok"
 		
-	color_view.text = BaseScript.order_model[BaseScript.COLOR]
-	if (!BaseScript.m_result_order[BaseScript.COLOR]) :
-		color_view.text += " Ошибка"
-	else:
-		color_view.text += " Ok"
+		new_label.text = title
+		new_label.visible = true
+		new_label.set("theme_override_colors/font_color", "000000")
+#		new_car_ad.ad_selected.connect(set_ad_id)
+#		new_car_ad.set_data(item_buy_car)
+#		reset_selection.connect(new_car_ad.reset_item_color)
+		$ColorRect/MarginContainer/VBoxContainer.add_child(new_label)	
+	
+#	model_view.text = BaseScript.order_model[BaseScript.MODEL]
+#	if (!BaseScript.m_result_order[BaseScript.MODEL]) :
+#		model_view.text += " Ошибка"
+#	else:
+#		model_view.text += " Ok"
+#
+#	color_view.text = BaseScript.order_model[BaseScript.COLOR]
+#	if (!BaseScript.m_result_order[BaseScript.COLOR]) :
+#		color_view.text += " Ошибка"
+#	else:
+#		color_view.text += " Ok"
 		
 	var res_money = 100
 	var res_decriment = 0
