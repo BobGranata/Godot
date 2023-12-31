@@ -1,7 +1,7 @@
 extends Node
 
 enum { NONE, MODEL, MELEAGE, OWNERS, VIN, COLOR, YEAR, COST, VOLUME, ENGINE_NUMBER }
-
+# 
 const title_rus = {
 	MODEL: "Модель: ", 
 	MELEAGE: "Пробег: ", 
@@ -47,6 +47,14 @@ var characters = 'abcdefghijklmnopqrstuvwxyz1234567890'
 const car_models = ["Lada", "KIA", "Subaru", "Datsun", "Audi", "Scoda", "Siat", "Jeep", "Toyota", "Ford", "Renault"]
 const car_colors = ["Зелёный", "Красный", "Бежевый", "Синий", "Чёрный", "Белый", "Жёлтный", "Оранжевый", "Голубой"]
 const car_engine_volums = ["1.2", "1.4", "1.6", "1.8", "2.0"]
+
+const car_gears = ["МКПП", "АКПП"]
+
+# Требование: Идеальное, хорошее, 
+# Не бит не крашен, крашен, поцарапан 
+const car_body_condition = [1, 2, 3, 4, 5]
+const ignition = []
+
 const car_class = ["a", "b", "c", "d", "f", "g"]
 const car_price_category = [1, 2, 3, 4, 5]
 
