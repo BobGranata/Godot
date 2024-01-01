@@ -94,30 +94,35 @@ scale = Vector2(0.466877, 0.466877)
 texture = ExtResource("1_t7n66")
 
 [node name="bonnet" type="CheckBox" parent="Control3"]
+layout_mode = 0
 offset_left = 333.0
 offset_top = 126.0
 offset_right = 358.0
 offset_bottom = 153.0
 
 [node name="right _z_door" type="CheckBox" parent="Control3"]
+layout_mode = 0
 offset_left = 175.0
 offset_top = 33.0
 offset_right = 199.0
 offset_bottom = 57.0
 
 [node name="right _door" type="CheckBox" parent="Control3"]
+layout_mode = 0
 offset_left = 238.0
 offset_top = 224.0
 offset_right = 262.0
 offset_bottom = 248.0
 
 [node name="left_door" type="CheckBox" parent="Control3"]
+layout_mode = 0
 offset_left = 239.0
 offset_top = 32.0
 offset_right = 263.0
 offset_bottom = 56.0
 
 [node name="right _z_door2" type="CheckBox" parent="Control3"]
+layout_mode = 0
 offset_left = 177.0
 offset_top = 224.0
 offset_right = 201.0
@@ -160,6 +165,7 @@ offset_right = 185.0
 offset_bottom = 213.0
 
 [node name="Label" type="Label" parent="Control2"]
+layout_mode = 0
 offset_left = 7.0
 offset_top = 1.0
 offset_right = 151.0
@@ -168,18 +174,21 @@ text = "Работа двигателя"
 label_settings = SubResource("LabelSettings_nqu5l")
 
 [node name="error0" type="CheckBox" parent="Control2"]
+layout_mode = 0
 offset_left = 153.0
 offset_top = 30.0
 offset_right = 177.0
 offset_bottom = 54.0
 
 [node name="error1" type="CheckBox" parent="Control2"]
+layout_mode = 0
 offset_left = 153.0
 offset_top = 56.0
 offset_right = 177.0
 offset_bottom = 80.0
 
 [node name="error2" type="CheckBox" parent="Control2"]
+layout_mode = 0
 offset_left = 153.0
 offset_top = 102.0
 offset_right = 177.0

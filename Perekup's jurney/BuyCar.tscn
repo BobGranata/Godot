@@ -1,15 +1,14 @@
-[gd_scene load_steps=9 format=3 uid="uid://64gwuct5o4xg"]
+[gd_scene load_steps=8 format=3 uid="uid://64gwuct5o4xg"]
 
 [ext_resource type="PackedScene" uid="uid://bg2r4wi1j1t52" path="res://Pts.tscn" id="1"]
 [ext_resource type="Script" path="res://BuyCar.gd" id="2"]
 [ext_resource type="PackedScene" uid="uid://cfll87y1imqxa" path="res://Phone.tscn" id="3"]
-[ext_resource type="FontFile" uid="uid://m1odn2c6ubmb" path="res://calibri.ttf" id="4"]
 [ext_resource type="Script" path="res://ChooseItemLayer.gd" id="5"]
 [ext_resource type="PackedScene" uid="uid://b0m0rutwvcd11" path="res://CarView.tscn" id="6_tgsqk"]
-[ext_resource type="PackedScene" uid="uid://cegtvs1rejw1r" path="res://order.tscn" id="7_b22tp"]
+[ext_resource type="PackedScene" uid="uid://cegtvs1rejw1r" path="res://Order.tscn" id="7_b22tp"]
 
 [sub_resource type="FontFile" id="1"]
-fallbacks = Array[Font]([ExtResource("4")])
+fallbacks = Array[Font]([null])
 cache/0/16/0/ascent = 0.0
 cache/0/16/0/descent = 0.0
 cache/0/16/0/underline_position = 0.0

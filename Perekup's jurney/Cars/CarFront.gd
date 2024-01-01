@@ -28,11 +28,8 @@ func load_new_view():
 	circle.scale = Vector2(0.5, 0.5)
 	circle.caption = "Подкапотное пространство"
 	circle.input_event.connect(_on_Area2D_input_event)
-#	var ddd = circle.Area2D
 	add_child(circle)
-	set_process_input(true)
-#	$Sprite.texture = char_tex			
-	pass
+#	set_process_input(true)
 
 func _on_Area2D_input_event(viewport, event, shape_idx):
 	if event.is_pressed() :
@@ -40,7 +37,7 @@ func _on_Area2D_input_event(viewport, event, shape_idx):
 		get_tree().call_group("circles", "queue_free")
 		Input.set_default_cursor_shape(0)		
 		
-		emit_signal("level_changed", "CarUnderHood")
+		emit_signal("level_changed", "CarUnderHood")	
 
 func _on_vin_circle_input_event(viewport, event, shape_idx):
 	if event.is_pressed() :
@@ -48,3 +45,11 @@ func _on_vin_circle_input_event(viewport, event, shape_idx):
 		Input.set_default_cursor_shape(0)		
 		
 		emit_signal("level_changed", "VinPlate")
+
+func _on_door_input_event(viewport, event, shape_idx):
+	if event.is_pressed() :
+#		$Sprite.texture = load("res://Sprites/1/6.jpg")
+		get_tree().call_group("circles", "queue_free")
+		Input.set_default_cursor_shape(0)		
+		
+		emit_signal("level_changed", "CarInterior")	

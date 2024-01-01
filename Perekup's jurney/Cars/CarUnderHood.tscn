@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://br7ypoowundjc"]
 
 [ext_resource type="Script" path="res://Cars/CarUnderHood.gd" id="1_8peva"]
-[ext_resource type="Texture2D" uid="uid://crs7qchm33flc" path="res://Sprites/1/6.jpg" id="2_mh6dj"]
-[ext_resource type="PackedScene" path="res://MarkCircle.tscn" id="3_rqtk6"]
+[ext_resource type="Texture2D" uid="uid://c4ssg02tp4wqh" path="res://Sprites/1/6.jpg" id="2_mh6dj"]
+[ext_resource type="PackedScene" uid="uid://bph5l6v1wjfk0" path="res://MarkCircle.tscn" id="3_rqtk6"]
 
 [node name="car_under_hood" type="Node2D"]
 position = Vector2(310, 231)

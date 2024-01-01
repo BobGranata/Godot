@@ -1,67 +1,67 @@
 [gd_scene load_steps=20 format=3 uid="uid://da058yqr4j5g7"]
 
-[ext_resource type="Texture2D" uid="uid://cf0bwufjaesfi" path="res://Exterior/Speedometer/Panel2.png" id="1_61t5y"]
-[ext_resource type="Script" path="res://panel_pribor.gd" id="1_aa6de"]
-[ext_resource type="Texture2D" uid="uid://bii6qfwuypmlr" path="res://Exterior/Speedometer/centr.png" id="2_rvqq0"]
-[ext_resource type="Texture2D" uid="uid://bgdm15i2gpfky" path="res://Exterior/Speedometer/StrelkaTahometr.png" id="3_q4ess"]
-[ext_resource type="Texture2D" uid="uid://dhp4hnxge8k0x" path="res://Exterior/Speedometer/CentrSpeed.png" id="4_aukgy"]
-[ext_resource type="Texture2D" uid="uid://dibx24jnol6cs" path="res://Exterior/Speedometer/StrelkaSpeedometr.png" id="5_87xkg"]
-[ext_resource type="Texture2D" uid="uid://lnbl8al1inlk" path="res://Exterior/Speedometer/akb.png" id="7_31vvt"]
-[ext_resource type="Texture2D" uid="uid://c1p4fayvda3qy" path="res://Exterior/Speedometer/StrelkaToplivo.png" id="7_c8iyb"]
-[ext_resource type="Texture2D" uid="uid://bjp4u04237kka" path="res://Exterior/Speedometer/chek.png" id="8_a4b6c"]
-[ext_resource type="Texture2D" uid="uid://lb561ejfhins" path="res://Exterior/Speedometer/masl.png" id="9_cva2r"]
-[ext_resource type="Texture2D" uid="uid://bfhfeep5ysgmk" path="res://Exterior/Speedometer/airbag.png" id="10_cwfq6"]
-[ext_resource type="Texture2D" uid="uid://bvlw53dlu6d4" path="res://Exterior/Speedometer/abs.png" id="11_82o24"]
-[ext_resource type="Texture2D" uid="uid://ntj5fidf00nn" path="res://Exterior/Speedometer/toplivo.png" id="12_o5ufv"]
-[ext_resource type="AudioStream" uid="uid://covufhjxse30m" path="res://Sound/starter.mp3" id="14_0inuf"]
-[ext_resource type="AudioStream" uid="uid://dxijd2gq0wnmw" path="res://Sound/motor2.wav" id="14_34luo"]
-[ext_resource type="AudioStream" uid="uid://b0jpx473b7mkm" path="res://Sound/dvigat.wav" id="14_t2wwf"]
-[ext_resource type="AudioStream" uid="uid://dhe2mag3uxv6a" path="res://Sound/Двигатель троит 🚗 - звук троящего двигателя, автомобиля и шум двигателя который троит ⚙️ (256  kbps).mp3" id="14_thav5"]
-[ext_resource type="PackedScene" uid="uid://0qyw7psmlv7" path="res://car_inspection.tscn" id="18_2bie1"]
+[ext_resource type="Script" path="res://Cars/CarControlPanel.gd" id="1_ky13u"]
+[ext_resource type="Texture2D" uid="uid://cf0bwufjaesfi" path="res://Exterior/Speedometer/Panel2.png" id="2_pe3cq"]
+[ext_resource type="Texture2D" uid="uid://bii6qfwuypmlr" path="res://Exterior/Speedometer/centr.png" id="3_i0yy6"]
+[ext_resource type="Texture2D" uid="uid://bgdm15i2gpfky" path="res://Exterior/Speedometer/StrelkaTahometr.png" id="4_tqnk3"]
+[ext_resource type="Texture2D" uid="uid://dhp4hnxge8k0x" path="res://Exterior/Speedometer/CentrSpeed.png" id="5_ccm22"]
+[ext_resource type="Texture2D" uid="uid://dibx24jnol6cs" path="res://Exterior/Speedometer/StrelkaSpeedometr.png" id="6_e2u7l"]
+[ext_resource type="Texture2D" uid="uid://c1p4fayvda3qy" path="res://Exterior/Speedometer/StrelkaToplivo.png" id="7_08ree"]
+[ext_resource type="Texture2D" uid="uid://lnbl8al1inlk" path="res://Exterior/Speedometer/akb.png" id="8_2w50b"]
+[ext_resource type="Texture2D" uid="uid://bjp4u04237kka" path="res://Exterior/Speedometer/chek.png" id="9_x85ei"]
+[ext_resource type="Texture2D" uid="uid://lb561ejfhins" path="res://Exterior/Speedometer/masl.png" id="10_x4602"]
+[ext_resource type="Texture2D" uid="uid://bfhfeep5ysgmk" path="res://Exterior/Speedometer/airbag.png" id="11_e2a58"]
+[ext_resource type="Texture2D" uid="uid://bvlw53dlu6d4" path="res://Exterior/Speedometer/abs.png" id="12_reism"]
+[ext_resource type="Texture2D" uid="uid://ntj5fidf00nn" path="res://Exterior/Speedometer/toplivo.png" id="13_2g7lt"]
+[ext_resource type="AudioStream" uid="uid://dhe2mag3uxv6a" path="res://Sound/Двигатель троит 🚗 - звук троящего двигателя, автомобиля и шум двигателя который троит ⚙️ (256  kbps).mp3" id="14_3chju"]
+[ext_resource type="AudioStream" uid="uid://dxijd2gq0wnmw" path="res://Sound/motor2.wav" id="15_3wbm6"]
+[ext_resource type="AudioStream" uid="uid://b0jpx473b7mkm" path="res://Sound/dvigat.wav" id="16_shwlw"]
+[ext_resource type="AudioStream" uid="uid://covufhjxse30m" path="res://Sound/starter.mp3" id="17_2nt2i"]
+[ext_resource type="PackedScene" uid="uid://0qyw7psmlv7" path="res://car_inspection.tscn" id="18_qvqur"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_u50a7"]
 font_size = 26
 
-[node name="PanelPribor" type="Node2D"]
-script = ExtResource("1_aa6de")
+[node name="CarControlPanel" type="Node2D"]
+script = ExtResource("1_ky13u")
 
 [node name="Panel" type="Sprite2D" parent="."]
 position = Vector2(636.781, 315.5)
 scale = Vector2(0.541209, 0.541209)
-texture = ExtResource("1_61t5y")
+texture = ExtResource("2_pe3cq")
 
 [node name="Centr" type="Sprite2D" parent="Panel"]
 position = Vector2(-609.284, 40.8737)
 rotation = -0.95644
 scale = Vector2(0.992476, 0.992476)
-texture = ExtResource("2_rvqq0")
+texture = ExtResource("3_i0yy6")
 
 [node name="StrelkaTahometr" type="Sprite2D" parent="Panel/Centr"]
 position = Vector2(-158.723, -82.7519)
 scale = Vector2(0.972763, 0.972763)
-texture = ExtResource("3_q4ess")
+texture = ExtResource("4_tqnk3")
 
 [node name="CentrSpeed" type="Sprite2D" parent="Panel"]
 position = Vector2(-17.8601, 0.509329)
 rotation = -2.81871
 scale = Vector2(0.989827, 0.989827)
-texture = ExtResource("4_aukgy")
+texture = ExtResource("5_ccm22")
 
 [node name="StrelkaSpeedometr" type="Sprite2D" parent="Panel/CentrSpeed"]
 position = Vector2(137.422, -132.243)
 scale = Vector2(1.11067, 1.11067)
-texture = ExtResource("5_87xkg")
+texture = ExtResource("6_e2u7l")
 
 [node name="Temp" type="Sprite2D" parent="Panel"]
 position = Vector2(804.162, 135.807)
 rotation = -0.837758
 scale = Vector2(0.832343, 0.832343)
-texture = ExtResource("4_aukgy")
+texture = ExtResource("5_ccm22")
 
 [node name="StrelkaTemp" type="Sprite2D" parent="Panel/Temp"]
 position = Vector2(-126.534, -22.1989)
 scale = Vector2(1.41614, 1.41614)
-texture = ExtResource("7_c8iyb")
+texture = ExtResource("7_08ree")
 
 [node name="launch" type="Button" parent="."]
 offset_left = 365.0
@@ -90,32 +90,32 @@ horizontal_alignment = 1
 [node name="Akb" type="Sprite2D" parent="."]
 position = Vector2(480, 506)
 scale = Vector2(0.677778, 0.677778)
-texture = ExtResource("7_31vvt")
+texture = ExtResource("8_2w50b")
 
 [node name="Chek" type="Sprite2D" parent="."]
 position = Vector2(756.546, 506.375)
 scale = Vector2(0.163173, 0.163173)
-texture = ExtResource("8_a4b6c")
+texture = ExtResource("9_x85ei")
 
 [node name="Masl" type="Sprite2D" parent="."]
 position = Vector2(619.889, 506)
 scale = Vector2(0.195898, 0.245454)
-texture = ExtResource("9_cva2r")
+texture = ExtResource("10_x4602")
 
 [node name="Airbag" type="Sprite2D" parent="."]
 position = Vector2(865, 507)
 scale = Vector2(0.627778, 0.627778)
-texture = ExtResource("10_cwfq6")
+texture = ExtResource("11_e2a58")
 
 [node name="Abs" type="Sprite2D" parent="."]
 position = Vector2(812, 507)
 scale = Vector2(0.178144, 0.178143)
-texture = ExtResource("11_82o24")
+texture = ExtResource("12_reism")
 
 [node name="Toplivo" type="Sprite2D" parent="."]
 position = Vector2(552, 506)
 scale = Vector2(0.190251, 0.190251)
-texture = ExtResource("12_o5ufv")
+texture = ExtResource("13_2g7lt")
 
 [node name="TimerLampAirbag" type="Timer" parent="."]
 
@@ -129,16 +129,16 @@ wait_time = 0.068
 [node name="TimerLampChek" type="Timer" parent="."]
 
 [node name="slomMotor" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("14_thav5")
+stream = ExtResource("14_3chju")
 
 [node name="Motor2" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("14_34luo")
+stream = ExtResource("15_3wbm6")
 
 [node name="Motor" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("14_t2wwf")
+stream = ExtResource("16_shwlw")
 
 [node name="Starter" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("14_0inuf")
+stream = ExtResource("17_2nt2i")
 
 [node name="CheckButton" type="CheckButton" parent="."]
 offset_left = 1003.0
@@ -147,7 +147,8 @@ offset_right = 1156.0
 offset_bottom = 648.0
 text = "Диагностика"
 
-[node name="car_inspection" parent="." instance=ExtResource("18_2bie1")]
+[node name="car_inspection" parent="." instance=ExtResource("18_qvqur")]
+visible = false
 position = Vector2(36, 32)
 scale = Vector2(0.8, 0.8)
 
@@ -235,6 +236,13 @@ offset_right = 1156.0
 offset_bottom = 681.0
 text = "Осмотр авто"
 
+[node name="Button" type="Button" parent="."]
+offset_left = 24.0
+offset_top = 20.0
+offset_right = 84.0
+offset_bottom = 51.0
+text = "Back"
+
 [connection signal="pressed" from="launch" to="." method="_on_launch_pressed"]
 [connection signal="button_down" from="Gas" to="." method="_on_gas_button_down"]
 [connection signal="button_up" from="Gas" to="." method="_on_gas_button_up"]
@@ -246,3 +254,4 @@ text = "Осмотр авто"
 [connection signal="pressed" from="CheckButton" to="." method="_on_check_button_pressed"]
 [connection signal="toggled" from="CheckButton" to="." method="_on_check_button_toggled"]
 [connection signal="toggled" from="CheckButton2" to="." method="_on_check_button_2_toggled"]
+[connection signal="gui_input" from="Button" to="." method="_on_button_gui_input"]

@@ -1,4 +1,9 @@
 extends Node2D
+
+signal level_changed(level_name)
+signal level_back()
+signal add_compare_value
+
 var buttLaunch = false
 var buttAcc = false
 var buttGas = false
@@ -14,7 +19,7 @@ var timer_starta = 0
 var motor_sound =false
 var probeg
 
-
+var m_dict_buy_car
 
 func _ready():
 	randomize()
@@ -277,3 +282,11 @@ func _on_check_button_2_toggled(button_pressed):
 		$car_inspection.visible = false
 	
 	pass # Replace with function body.
+
+
+func _on_button_gui_input(event):
+	if event.is_pressed() :	
+		emit_signal("level_back")	
+
+func set_data(dict_buy_car):
+	m_dict_buy_car = dict_buy_car
