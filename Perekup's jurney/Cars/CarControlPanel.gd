@@ -4,57 +4,41 @@ signal level_changed(level_name)
 signal level_back()
 signal add_compare_value
 
-var buttLaunch = false
-var buttAcc = false
+# 0 - off, 1 - acc, 2 - start
+var key_state = 0
+
 var buttGas = false
 var gas = -1
 var AirbagLamp = 0
 var maslLamp = 0
 var chekLamp = 0
 var temp = -0.9
-var timeTemp = 0
-var error = 0
-var rng = RandomNumberGenerator.new()
+var ignition = 0
 var timer_starta = 0
-var motor_sound =false
-var probeg
 
 var m_dict_buy_car
 
 func _ready():
-	randomize()
-	error = rng.randi_range(0, 2)
-	stop_lamp()
-	probeg = rng.randi_range(10000, 99999)
-	$Label.set("text", "0" + str(probeg)) # Пробег
-	$diagnostics.visible = false
-	$diagnostics/probeg.set("text", "Пробег: " + str(probeg))
-	$diagnostics/motochas.set("text", "Моточасы: " + str(probeg/10000*365*2) + " моточасов")
-	$CheckButton.disabled = true
-	$Label2.set("text", str(error))
-	$car_inspection.visible = false
 	pass 
-
 
 func process_lamp():
 	if AirbagLamp == 2:  #Лампа подушки
-			$Airbag.visible = false
-			AirbagLamp = 0
-			$TimerLampAirbag.stop()
+		$Airbag.visible = false
+		AirbagLamp = 0
+		$TimerLampAirbag.stop()
 	if maslLamp == 2:   #Лампа масла
-			$Masl.visible = false
-			maslLamp = 0
-			$TimerLampMasl.stop()
+		$Masl.visible = false
+		maslLamp = 0
+		$TimerLampMasl.stop()
 	if chekLamp == 3:   #Лампа чек
-			$Chek.visible = false
-			chekLamp = 0
-			$TimerLampChek.stop()
-
+		$Chek.visible = false
+		chekLamp = 0
+		$TimerLampChek.stop()
 
 func _process(delta):
 	Sound()
 	process_lamp()
-	if buttLaunch:
+	if key_state == 2:
 		if buttGas:
 			_on_gas_button_down()
 		else:
@@ -69,31 +53,25 @@ func _process(delta):
 		Motor()
 	$Panel/Temp.set("rotation", temp)
 	$Panel/Centr.set("rotation", gas)
-	pass
-
 
 func _on_gas_button_down():
-	if buttLaunch:
+	if key_state == 2:
 		gas += 0.05
 		if gas > 2.4-1:
 			gas = 2.25-1
 		buttGas = true
-	pass 
 
 func Sound():
 	if buttGas:
 		$Motor2.play()
 	else:
 		$Motor2.stop()
-	pass
-		
 
 func _on_gas_button_up():
-	if buttLaunch:
+	if key_state == 2:
 		if gas >= 0.18-1:
 			gas -= 0.02 
 		buttGas = false
-	pass
 
 func start_lamp():
 	$Akb.visible = true
@@ -114,7 +92,7 @@ func stop_lamp():
 
 func acc():
 	$launch.set("text", "Запуск")
-	buttAcc = true
+	key_state = 1
 	start_lamp()
 	$CheckButton.disabled = false
 	
@@ -124,7 +102,7 @@ func launch():
 	$Starter.play()
 	_on_timer_0_5_sek_timeout()
 	starter()
-	buttLaunch = true		
+	key_state = 2
 	$TimerLampMasl.start()
 	$TimerLampChek.start()
 	_on_timer_lamp_chek_timeout()
@@ -138,111 +116,99 @@ func launch():
 func off_acc():
 	$launch.set("text", "Зажигание")
 	gas = -1		
-	buttAcc = false
-	buttLaunch = false
+	key_state = 0
 	stop_lamp()
-	if error == 0:
+	if ignition == 0:
 		$Motor.stop()
-	elif error == 1:
+	elif ignition == 1:
 		$slomMotor.stop()
 	$diagnostics.visible = false
 	$CheckButton.disabled = true
 	$CheckButton.button_pressed = false
 
 func starter():
-	if error == 0:
+	if ignition == 0:
 		if timer_starta == 20: # работа стартера
 			$Timer0_5sek.stop()
 			timer_starta = 0
 			$Starter.stop()
-	elif error == 1:
+	elif ignition == 1:
 		if timer_starta == 40: # работа стартера
 			$Timer0_5sek.stop()
 			timer_starta = 0
 			$Starter.stop()
-	elif error == 2:
+	elif ignition == 2:
 		if timer_starta == 40: # работа стартера
 			$Timer0_5sek.stop()
 			timer_starta = 0
 			gas = -1
 			$Starter.stop()
 	
-	
 func Motor():
 	gas = -0.75
-	if error == 0:
+	if ignition == 0:
 		$Motor.play()
-	elif error == 1:
+	elif ignition == 1:
 		$slomMotor.play()
-	elif error == 2:
+	elif ignition == 2:
 		$Motor.stop()
 
 func launch_norm():
-	if buttAcc == false and buttLaunch == false:
+	if key_state == 0:
 		acc()
-	elif buttLaunch == false and buttAcc:
+	elif key_state == 1:
 		launch()
-	elif buttAcc and buttLaunch:		
+	elif key_state > 1:
 		off_acc()
 		
 func launch_error_1():
-	if buttAcc == false and buttLaunch == false:
+	if key_state == 0:
 		acc()
-	elif buttLaunch == false and buttAcc:
+	elif key_state == 1:
 		$launch.set("text", "Выключить")	
 		$Timer0_5sek.start()
 		$Starter.play()
 		_on_timer_0_5_sek_timeout()
 		starter()		
-		buttLaunch = true		
+		key_state = 2
 		$TimerLampMasl.start()
 		$Akb.visible = false
 		$Airbag.visible = false
 		$Abs.visible = false
 		$TimerTemp.start()
 		_on_timer_temp_timeout()
-	elif buttAcc and buttLaunch:		
+	elif key_state == 2:
 		off_acc()
 		
 func launch_error_2():
-	if buttAcc == false and buttLaunch == false:
+	if key_state == 0:
 		acc()
-	elif buttLaunch == false and buttAcc and $launch.get("text") == "Запуск":
+	elif key_state == 1 and $launch.get("text") == "Запуск":
 		$launch.set("text", "Выключить")	
 		$Timer0_5sek.start()
 		$Starter.play()
 		_on_timer_0_5_sek_timeout()
 		starter()		
-		buttLaunch = false
-	elif buttAcc and buttLaunch == false:		
+#		buttLaunch = false
+	elif key_state == 1:
 		off_acc()
 
-
 func _on_launch_pressed():
-	if error == 0:
+	if ignition == 0:
 		launch_norm()
-	elif error == 1:
+	elif ignition == 1:
 		launch_error_1()
-	elif error == 2:
+	elif ignition == 2:
 		launch_error_2()
-	pass 
-
 
 func _on_timer_lamp_timeout():
 	AirbagLamp += 1
-	pass 
-
 
 func _on_timer_lamp_masl_timeout():
 	maslLamp += 1
-	pass
-
 
 func _on_timer_lamp_chek_timeout():
 	chekLamp += 1
-	pass 
-
-
 
 func _on_timer_temp_timeout():
 	if gas >= 0.15-1 and gas<=0.35-1:
@@ -251,38 +217,23 @@ func _on_timer_temp_timeout():
 		temp += 0.03		
 	elif gas >= 0.6-1:
 		temp += 0.06
-	pass
-
 
 func _on_timer_0_5_sek_timeout():
 	timer_starta += 1  # работа стартера
-	gas = rng.randf_range(-0.85, -0.88)
-
-
+	gas = randf_range(-0.85, -0.88)
 
 func _on_check_button_toggled(button_pressed):
-	if button_pressed:
-		$diagnostics.visible = true
-	else:
-		$diagnostics.visible = false
-		
-	if error == 0:
+	$diagnostics.visible = button_pressed
+			
+	if ignition == 0:
 		$diagnostics/error.set("text", "Ошибок не обнаружено")
-	elif error == 1:
+	elif ignition == 1:
 		$diagnostics/error.set("text", "Ошибка двигателя, запуск затруднен")
-	elif  error == 2:
+	elif  ignition == 2:
 		$diagnostics/error.set("text", "Ошибка двигателя, запуск невозможен")
-	pass # Replace with function body.
-
 
 func _on_check_button_2_toggled(button_pressed):
-	if button_pressed:
-		$car_inspection.visible = true
-	else :
-		$car_inspection.visible = false
-	
-	pass # Replace with function body.
-
+	$car_inspection.visible = button_pressed
 
 func _on_button_gui_input(event):
 	if event.is_pressed() :	
@@ -290,3 +241,16 @@ func _on_button_gui_input(event):
 
 func set_data(dict_buy_car):
 	m_dict_buy_car = dict_buy_car
+	var dict_control_panel = m_dict_buy_car[BaseScript.CONTROL_PANEL]
+	
+	var probeg = dict_control_panel[BaseScript.MELEAGE]
+	ignition = dict_control_panel[BaseScript.IGNITION]
+	
+	stop_lamp()
+	$Label.text = "0" + probeg # Пробег
+	$diagnostics.visible = false
+#	$diagnostics/probeg.set("text", "Пробег: " + str(probeg))
+#	$diagnostics/motochas.set("text", "Моточасы: " + str(probeg/10000*365*2) + " моточасов")
+	$CheckButton.disabled = true
+	$Label2.text = str(ignition)
+	$car_inspection.visible = false

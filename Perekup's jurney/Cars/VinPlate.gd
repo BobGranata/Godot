@@ -21,8 +21,6 @@ func _process(delta):
 	pass
 	
 func set_data(dict_buy_car):
-	plate_model.text 
-	
 	m_dict_buy_car = dict_buy_car
 	var dict_engine_plate = m_dict_buy_car[base_models.VIN_PLATE]
 	plate_model.text = dict_engine_plate[base_models.MODEL]

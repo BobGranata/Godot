@@ -1,6 +1,6 @@
 extends Node
 
-enum { NONE, MODEL, MELEAGE, OWNERS, VIN, COLOR, YEAR, COST, VOLUME, ENGINE_NUMBER }
+enum { NONE, MODEL, MELEAGE, OWNERS, VIN, COLOR, YEAR, COST, VOLUME, ENGINE_NUMBER, IGNITION }
 # 
 const title_rus = {
 	MODEL: "Модель: ", 
@@ -13,7 +13,7 @@ const title_rus = {
 	VOLUME: "Объём: ", 
 	ENGINE_NUMBER: "Номер двигателя: "}
 
-enum { PTS, PHONE, ENGINE_PLATE, VIN_PLATE}
+enum { PTS, PHONE, ENGINE_PLATE, VIN_PLATE, CONTROL_PANEL}
 	
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -53,7 +53,6 @@ const car_gears = ["МКПП", "АКПП"]
 # Требование: Идеальное, хорошее, 
 # Не бит не крашен, крашен, поцарапан 
 const car_body_condition = [1, 2, 3, 4, 5]
-const ignition = []
 
 const car_class = ["a", "b", "c", "d", "f", "g"]
 const car_price_category = [1, 2, 3, 4, 5]
@@ -89,6 +88,8 @@ func generate_value(key):
 		return str(year - randi() % 20)
 	elif key == COST:
 		return str(randi() % 100 * 10000)
+	elif key == IGNITION:	
+		return randi_range(0, 2)
 
 
 var m_dict_car = {}
@@ -151,7 +152,8 @@ func load_car_by_order():
 							MELEAGE: generate_value(MELEAGE),
 							OWNERS: generate_value(OWNERS),
 							COST: generate_value(COST),
-							ENGINE_NUMBER: generate_value(ENGINE_NUMBER)
+							ENGINE_NUMBER: generate_value(ENGINE_NUMBER),
+							IGNITION: generate_value(IGNITION)
 							}
 
 	for order_item in order_model:
@@ -189,15 +191,19 @@ func load_car_by_order():
 	dict_engine_plate[ENGINE_NUMBER] = number	
 	dict_engine_plate[VOLUME] = volume	
 	
-	var dictVinPlate = {}
-	dictVinPlate[MODEL] = model
-	dictVinPlate[VIN] = vin
-	dictVinPlate[COLOR] = color
+	var dict_vin_plate = {}
+	dict_vin_plate[MODEL] = model
+	dict_vin_plate[VIN] = vin
+	dict_vin_plate[COLOR] = color
+	
+	var dict_control_panel = { MELEAGE: meleage,
+								IGNITION: generate_data[IGNITION]}
 	
 	var dict_buy_car = {PTS: dict_pts, 
 						PHONE: dict_advert, 
 						ENGINE_PLATE: dict_engine_plate, 
-						VIN_PLATE: dictVinPlate }
+						VIN_PLATE: dict_vin_plate,
+						CONTROL_PANEL: dict_control_panel}
 	
 	var doc_count = dict_buy_car.size()
 	# С вероятностью 1/4 будет ошибка
