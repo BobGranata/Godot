@@ -125,3 +125,6 @@ func _on_button_2_pressed():
 
 func _on_order_close_order_result():
 	emit_signal("level_changed", "Room/desk")
+
+func _on_gui_work_end():
+	emit_signal("level_changed", "results_of_day")

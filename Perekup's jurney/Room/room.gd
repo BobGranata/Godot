@@ -34,3 +34,7 @@ func _on_desk_input_event(viewport, event, shape_idx):
 		
 func cleanup():	
 	queue_free()
+	
+func _on_gui_work_end():
+	emit_signal("level_changed", "results_of_day")
+	pass # Replace with function body.

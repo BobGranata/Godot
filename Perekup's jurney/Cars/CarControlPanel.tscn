@@ -141,13 +141,6 @@ stream = ExtResource("16_shwlw")
 [node name="Starter" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("17_2nt2i")
 
-[node name="CheckButton" type="CheckButton" parent="."]
-offset_left = 1003.0
-offset_top = 615.0
-offset_right = 1156.0
-offset_bottom = 648.0
-text = "Диагностика"
-
 [node name="car_inspection" parent="." instance=ExtResource("18_qvqur")]
 visible = false
 position = Vector2(36, 32)
@@ -184,7 +177,5 @@ text = "Back"
 [connection signal="timeout" from="Timer0_5sek" to="." method="_on_timer_0_5_sek_timeout"]
 [connection signal="timeout" from="TimerTemp" to="." method="_on_timer_temp_timeout"]
 [connection signal="timeout" from="TimerLampChek" to="." method="_on_timer_lamp_chek_timeout"]
-[connection signal="pressed" from="CheckButton" to="." method="_on_check_button_pressed"]
-[connection signal="toggled" from="CheckButton" to="." method="_on_check_button_toggled"]
 [connection signal="toggled" from="CheckButton2" to="." method="_on_check_button_2_toggled"]
 [connection signal="gui_input" from="Button" to="." method="_on_button_gui_input"]

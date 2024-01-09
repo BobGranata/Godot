@@ -1,12 +1,15 @@
-[gd_scene format=3 uid="uid://br3rcjvfcty5n"]
+[gd_scene load_steps=2 format=3 uid="uid://br3rcjvfcty5n"]
 
-[node name="diagnostics" type="Control"]
+[ext_resource type="Script" path="res://Cars/Diagnostics.gd" id="1_0f1c6"]
+
+[node name="Diagnostics" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 402.0
 offset_top = 156.0
 offset_right = 839.0
 offset_bottom = 410.0
+script = ExtResource("1_0f1c6")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 0

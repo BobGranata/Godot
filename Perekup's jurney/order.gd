@@ -69,18 +69,6 @@ func show_result():
 #		new_car_ad.set_data(item_buy_car)
 #		reset_selection.connect(new_car_ad.reset_item_color)
 		$ColorRect/MarginContainer/VBoxContainer.add_child(new_label)	
-	
-#	model_view.text = BaseScript.order_model[BaseScript.MODEL]
-#	if (!BaseScript.m_result_order[BaseScript.MODEL]) :
-#		model_view.text += " Ошибка"
-#	else:
-#		model_view.text += " Ok"
-#
-#	color_view.text = BaseScript.order_model[BaseScript.COLOR]
-#	if (!BaseScript.m_result_order[BaseScript.COLOR]) :
-#		color_view.text += " Ошибка"
-#	else:
-#		color_view.text += " Ok"
 		
 	var res_money = 100
 	var res_decriment = 0
@@ -90,6 +78,8 @@ func show_result():
 	
 	if (res_decriment != 0):
 		res_money = res_decriment
+		
+	BaseScript.m_bank_account += res_money
 		
 	$ColorRect/lbResultMoney.text = "Итого: " 
 	$ColorRect/lbResultMoney.text += str(res_money)

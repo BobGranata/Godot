@@ -94,7 +94,7 @@ func acc():
 	$launch.set("text", "Запуск")
 	key_state = 1
 	start_lamp()
-	$CheckButton.disabled = false
+#	$CheckButton.disabled = false
 	
 func launch():
 	$launch.set("text", "Выключить")	
@@ -122,7 +122,6 @@ func off_acc():
 		$Motor.stop()
 	elif ignition == 1:
 		$slomMotor.stop()
-	$diagnostics.visible = false
 	$CheckButton.disabled = true
 	$CheckButton.button_pressed = false
 
@@ -222,16 +221,6 @@ func _on_timer_0_5_sek_timeout():
 	timer_starta += 1  # работа стартера
 	gas = randf_range(-0.85, -0.88)
 
-func _on_check_button_toggled(button_pressed):
-	$diagnostics.visible = button_pressed
-			
-	if ignition == 0:
-		$diagnostics/error.set("text", "Ошибок не обнаружено")
-	elif ignition == 1:
-		$diagnostics/error.set("text", "Ошибка двигателя, запуск затруднен")
-	elif  ignition == 2:
-		$diagnostics/error.set("text", "Ошибка двигателя, запуск невозможен")
-
 func _on_check_button_2_toggled(button_pressed):
 	$car_inspection.visible = button_pressed
 
@@ -248,9 +237,6 @@ func set_data(dict_buy_car):
 	
 	stop_lamp()
 	$Label.text = "0" + probeg # Пробег
-	$diagnostics.visible = false
-#	$diagnostics/probeg.set("text", "Пробег: " + str(probeg))
-#	$diagnostics/motochas.set("text", "Моточасы: " + str(probeg/10000*365*2) + " моточасов")
-	$CheckButton.disabled = true
+#	$CheckButton.disabled = true
 	$Label2.text = str(ignition)
 	$car_inspection.visible = false

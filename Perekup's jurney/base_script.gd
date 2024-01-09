@@ -17,6 +17,7 @@ enum { PTS, PHONE, ENGINE_PLATE, VIN_PLATE, CONTROL_PANEL}
 	
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	start_new_day()
 	pass # Replace with function body.
 
 
@@ -98,13 +99,22 @@ var order_model = {}
 var m_result_order = {}
 
 var m_current_car_id
-var m_bank_account
+var m_level = 1
 
-var m_level : int
+var game_minutes = 40
+var game_hours = 17
+var game_year = 2022
+var game_month = 06
+var game_day = 12
 
+var m_bank_account = 5000
 
+var m_room_rent = 500
+var m_utility_fee = 100
 
-func load_game():		 
+var m_number_of_good_buy = 0
+
+func load_game():
 	load_order()	
 	for i in 1:
 		load_car_by_order()
@@ -125,7 +135,7 @@ func load_order():
 #	Количество владельцев
 #	Цена		
 
-	m_level = 5
+#	m_level = 5
 	if m_level >= 1:
 		order_model[MODEL] = generate_value(MODEL)
 		order_model[COLOR] = generate_value(COLOR)
@@ -255,92 +265,6 @@ func load_car_by_order():
 	
 	m_dict_car[0] = dict_buy_car
 
-func load_car(car_id):
-	randomize()
-	
-	var vin = generate_value(VIN)
-	var color = generate_value(COLOR)
-	var model = generate_value(MODEL)
-	var volume = generate_value(VOLUME)
-	var number = generate_value(ENGINE_NUMBER)
-	
-	var dict_pts = {}
-	dict_pts[MODEL] = model
-	dict_pts[VIN] = vin
-	dict_pts[COLOR] = color
-	dict_pts[VOLUME] = volume
-	dict_pts[ENGINE_NUMBER] = number
-	
-	var dict_advert = {}
-	dict_advert[MODEL] = model
-	dict_advert[VIN] = vin
-	dict_advert[COLOR] = color
-	dict_advert[VOLUME] = volume
-	
-	var dict_engine_plate = {}
-	dict_engine_plate[ENGINE_NUMBER] = number	
-	dict_engine_plate[VOLUME] = volume	
-	
-	var dictVinPlate = {}
-	dictVinPlate[MODEL] = model
-	dictVinPlate[VIN] = vin
-	dictVinPlate[COLOR] = color
-	
-	var dict_buy_car = {PTS: dict_pts, 
-						PHONE: dict_advert, 
-						ENGINE_PLATE: dict_engine_plate, 
-						VIN_PLATE: dictVinPlate }
-	
-	m_dict_car[car_id] = dict_buy_car
-	
-	var doc_count = dict_buy_car.size()
-	# С вероятностью 1/4 будет ошибка
-#	if randi() % 4 == 3 :
-	if true:
-		var mismatch_doc_1 = randi() % doc_count
-		var mismatch_doc_2 = randi() % doc_count
-		
-		if (mismatch_doc_1 == mismatch_doc_2) :
-			if mismatch_doc_1 + 1 <= doc_count :
-				++mismatch_doc_1
-			elif mismatch_doc_1 - 1 >= 1 :
-				--mismatch_doc_1
-						
-		var doc_dictionary_1 = dict_buy_car[mismatch_doc_1]
-		var doc_dictionary_2 = dict_buy_car[mismatch_doc_2]
-		var doc_dictionary_cross = intersect_arrays(doc_dictionary_1, doc_dictionary_2)
-		var size_cross = doc_dictionary_cross.size()
-		
-		var m_mismatch = null
-		if size_cross:		
-			var mismatch
-			if size_cross == 1:			
-				mismatch = doc_dictionary_cross[0]
-			else:
-				mismatch = doc_dictionary_cross[randi() % size_cross]
-				
-			if randi() % 2 == 1:
-				doc_dictionary_1[mismatch] = generate_value(mismatch)
-			else:
-				doc_dictionary_2[mismatch] = generate_value(mismatch)
-				
-			if (doc_dictionary_1[mismatch] != doc_dictionary_2[mismatch]):				
-				m_mismatch = mismatch_class.new()
-				m_mismatch.type_doc_first = mismatch_doc_1
-				m_mismatch.type_doc_second = mismatch_doc_2
-				m_mismatch.field = mismatch
-
-				print(m_mismatch.type_doc_first)
-				print(m_mismatch.type_doc_second)
-				print(m_mismatch.field)
-				
-			else:
-				m_mismatch = null
-				print(null)
-		else:
-			m_mismatch = null
-			print(null)
-
 func intersect_arrays(arr1, arr2):
 	var arr2_dict = {}
 	for v in arr2:
@@ -376,6 +300,24 @@ func check_order():
 #						ENGINE_PLATE: dict_engine_plate, 
 #						VIN_PLATE: dictVinPlate }	
 
+func sum_up_the_day():
+	m_level += 1
+
+	m_room_rent = 500
+	m_utility_fee = 100
+	
+	m_number_of_good_buy
+	
+	m_bank_account -= m_room_rent
+	m_bank_account -= m_utility_fee
+	
+	start_new_day()
+	
+func start_new_day():
+	game_day += 1
+	game_hours = 10
+	game_minutes = 30
+	
 #func load_game_json():
 #	const SAVE_PATH = "res://car_adv.json"
 #
