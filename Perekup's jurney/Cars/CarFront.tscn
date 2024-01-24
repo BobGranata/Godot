@@ -22,7 +22,7 @@ polygon = PackedVector2Array(169, 153, 66, 193, 53, 208, 92, 221, 229, 222, 313,
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Door"]
 position = Vector2(109, 15)
-polygon = PackedVector2Array(298, 269, 373, 257, 386, 183, 353, 83, 318, 94, 292, 160)
+polygon = PackedVector2Array(298, 269, 349, 231, 386, 183, 353, 83, 318, 94, 292, 160)
 
 [node name="VinCircle" parent="." instance=ExtResource("2_kq0e2")]
 position = Vector2(471, 261)

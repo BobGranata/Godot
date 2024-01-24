@@ -13,13 +13,12 @@ const title_rus = {
 	VOLUME: "Объём: ", 
 	ENGINE_NUMBER: "Номер двигателя: "}
 
-enum { PTS, PHONE, ENGINE_PLATE, VIN_PLATE, CONTROL_PANEL}
+enum { PTS, ENGINE_PLATE, VIN_PLATE, CONTROL_PANEL, ORDER}
+enum { PHONE }
 	
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	start_new_day()
-	pass # Replace with function body.
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -59,7 +58,7 @@ const car_class = ["a", "b", "c", "d", "f", "g"]
 const car_price_category = [1, 2, 3, 4, 5]
 
 func generate_word(chars, length):
-	var word: String
+	var word : String = ""
 	var n_char = len(chars)
 	for i in range(length):
 		word += chars[randi()% n_char]
@@ -98,7 +97,7 @@ var m_current_car = {}
 var order_model = {}
 var m_result_order = {}
 
-var m_current_car_id
+#var m_current_car_id
 var m_level = 1
 
 var game_minutes = 40
@@ -107,26 +106,28 @@ var game_year = 2022
 var game_month = 06
 var game_day = 12
 
-var m_bank_account = 5000
+var m_bank_account = 1500
 
-var m_room_rent = 500
-var m_utility_fee = 100
+var m_room_rent = -500
+var m_utility_fee = -100
+var m_food = -100
 
-var m_number_of_good_buy = 0
+var m_number_of_good_deal = 0
 
 func load_game():
 	load_order()	
 	for i in 1:
 		load_car_by_order()
 
-func set_car_id(id : int):
-	m_current_car_id = id
-	
+#func set_car_id(id : int):
+#	m_current_car_id = id
+#
 func get_currect_car():
-	return m_dict_car[m_current_car_id]
-	
-func delete_currect_car():
-	m_dict_car.erase(m_current_car_id)	
+	return m_dict_car
+#	return m_dict_car[m_current_car_id]
+#
+#func delete_currect_car():
+#	m_dict_car.erase(m_current_car_id)	
 
 func load_order():
 #	Модель
@@ -139,20 +140,21 @@ func load_order():
 	if m_level >= 1:
 		order_model[MODEL] = generate_value(MODEL)
 		order_model[COLOR] = generate_value(COLOR)
-	if m_level >= 2:
 		order_model[YEAR] = generate_value(YEAR)
-	if m_level >= 3:
+	if m_level >= 2:
 		order_model[VOLUME] = generate_value(VOLUME)
-	if m_level >= 4:
+	if m_level >= 3:		
 		order_model[OWNERS] = generate_value(OWNERS)
-	if m_level >= 5:
+	if m_level >= 4:		
 		order_model[MELEAGE] = generate_value(MELEAGE)
+	if m_level >= 5:
+		order_model[COST] = generate_value(COST)
 	if m_level >= 6:	
-		order_model[COST] = generate_value(COST)		
+		order_model[COST] = generate_value(COST)
 		
 	
 func load_car_by_order():
-	randomize()	
+	randomize()		
 	
 	var generate_data = {VIN: generate_value(VIN),
 							MODEL: generate_value(MODEL),
@@ -210,7 +212,7 @@ func load_car_by_order():
 								IGNITION: generate_data[IGNITION]}
 	
 	var dict_buy_car = {PTS: dict_pts, 
-						PHONE: dict_advert, 
+#						PHONE: dict_advert, 
 						ENGINE_PLATE: dict_engine_plate, 
 						VIN_PLATE: dict_vin_plate,
 						CONTROL_PANEL: dict_control_panel}
@@ -263,7 +265,8 @@ func load_car_by_order():
 			m_mismatch = null
 			print(null)	
 	
-	m_dict_car[0] = dict_buy_car
+#	m_dict_car[0] = dict_buy_car
+	m_dict_car = dict_buy_car
 
 func intersect_arrays(arr1, arr2):
 	var arr2_dict = {}
@@ -276,7 +279,7 @@ func intersect_arrays(arr1, arr2):
 			in_both_arrays.append(v)
 	return in_both_arrays
 
-func check_order():
+func check_order(deal) -> int : 
 	var compare_car = get_currect_car()	
 	
 	for order_item in order_model:
@@ -295,6 +298,30 @@ func check_order():
 			elif order_model[compare_key] != buy_car_model[compare_key]:
 				m_result_order[compare_key] = false
 	
+	var res_money = 100
+	
+	var there_is_mistake = false
+	for res in m_result_order:
+		if (!m_result_order[res]):
+			there_is_mistake = true
+			break
+				
+	if deal && there_is_mistake:
+		res_money = -100
+				
+	if !deal && there_is_mistake:
+		res_money = 100
+
+	if !deal && !there_is_mistake:
+		res_money = -100	
+		
+	if res_money > 0:
+		m_number_of_good_deal += 1
+		
+	m_bank_account += res_money	
+	
+	return res_money
+	
 #	var dict_buy_car = {PTS: dict_pts, 
 #						PHONE: dict_advert, 
 #						ENGINE_PLATE: dict_engine_plate, 
@@ -303,55 +330,19 @@ func check_order():
 func sum_up_the_day():
 	m_level += 1
 
-	m_room_rent = 500
-	m_utility_fee = 100
+	m_room_rent = -200
+	m_utility_fee = -50
+	m_food = -100
 	
-	m_number_of_good_buy
+	m_number_of_good_deal
 	
-	m_bank_account -= m_room_rent
-	m_bank_account -= m_utility_fee
-	
-	start_new_day()
+	m_bank_account += m_room_rent
+	m_bank_account += m_utility_fee
+	m_bank_account += m_food		
 	
 func start_new_day():
-	game_day += 1
-	game_hours = 10
-	game_minutes = 30
+	m_number_of_good_deal = 0
 	
-#func load_game_json():
-#	const SAVE_PATH = "res://car_adv.json"
-#
-#	var file = FileAccess.open(SAVE_PATH, FileAccess.READ)
-#	var test_json_conv = JSON.new()
-#	test_json_conv.parse(file.get_as_text())
-#	var save_dict = test_json_conv.get_data()
-#
-#	var root = save_dict.advertisement
-#
-##	var idPts = str_to_var(root.pts.id)
-#	var modelPts= root.pts.model
-#	var vinPts = root.pts.vin
-#	var colorPts = root.pts.color
-#	var volume_pts = root.pts.volume
-#	var number_pts = root.pts.number	
-#
-#	$Pts.set_data(modelPts, vinPts, colorPts, volume_pts, number_pts)
-#
-##	var idAd = str_to_var(root.pts.id)
-#	var modelAd = root.adv.model
-#	var vinAd = root.adv.vin
-#	var colorAd = root.adv.color	
-#
-#	$Phone.set_data(modelAd, vinAd, colorAd)
-#
-#	var engine = base_models.engine_class.new()
-#	engine.volume = root.car.engine.volume
-#	engine.number = root.car.engine.number
-#	$CarView.set_data(engine)
-#
-#	m_mismatch = base_models.mismatch_class.new()
-#	m_mismatch.type_doc_first = str_to_var(root.mismatch.type_first)
-#	m_mismatch.type_doc_second = str_to_var(root.mismatch.type_second)
-#	m_mismatch.field = str_to_var(root.mismatch.field)
-#
-#	$CarView.set_data(engine)	
+	game_day += 1
+	game_hours = 12
+	game_minutes = 0

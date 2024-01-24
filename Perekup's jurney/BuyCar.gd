@@ -11,6 +11,8 @@ var check_mode = false
 var m_status_description : String
 var m_mismatch : base_models.mismatch_class
 
+var dict_papers = {}
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var dict_car = BaseScript.get_currect_car()
@@ -18,9 +20,16 @@ func _ready():
 	var dict_pts = dict_car[BaseScript.PTS]
 	var dict_advert = dict_car[BaseScript.PHONE]
 	
+	dict_papers = {BaseScript.PTS: $Pts,
+#					BaseScript.PHONE: $Phone, 
+					BaseScript.ORDER: $Order}
+
+	
 	$Pts.set_data_dict(dict_pts)
-	$Phone.set_data_dict(dict_advert)
+#	$Phone.set_data_dict(dict_advert)
 	$CarView.set_data_dict(dict_car)
+	
+	$Order.set_data()
 	
 func _draw():
 	pass
@@ -36,8 +45,8 @@ func set_data():
 	var dict_advert = dict_car[BaseScript.PHONE]
 	
 	$Pts.set_data_dict(dict_pts)
-	$Phone.set_data_dict(dict_advert)
-	$CarView.set_data_dict(dict_car)
+#	$Phone.set_data_dict(dict_advert)
+	$CarView.set_data_dict(dict_car)	
 
 func add_compare_item(_type_doc, type_item, control_item):
 	print("compare")
@@ -75,8 +84,8 @@ func add_compare_item(_type_doc, type_item, control_item):
 				var mis1 = m_mismatch.type_doc_first
 				var mis2 = m_mismatch.type_doc_second
 				var f1 = mis1 == first.type_doc || mis1 == second.type_doc 
-				var f2 = mis2 == first.type_doc || mis2 == second.type_doc 			
-				if m_mismatch != null && f1 && f2:				
+				var f2 = mis2 == first.type_doc || mis2 == second.type_doc
+				if m_mismatch != null && f1 && f2:
 					if first.type_item == m_mismatch.field :
 						# несовпадение
 						m_status_description = "Обнаружено несоответсвие"
@@ -91,14 +100,13 @@ func add_compare_item(_type_doc, type_item, control_item):
 #		$Info.text = m_status_description
 	$Info.text = m_status_description
 
-func move_doc(type_doc):
-	if type_doc == base_models.PTS :
-		$Pts.set("z_index", 1)
-		$Phone.set("z_index", 0)
-	elif type_doc == base_models.PHONE :
-		$Pts.set("z_index", 0)
-		$Phone.set("z_index", 1)
-
+func move_doc(type_doc):	
+	for dict_type_doc in dict_papers:
+		if dict_type_doc == type_doc:
+			dict_papers[dict_type_doc].set("z_index", 1)
+		else:
+			dict_papers[dict_type_doc].set("z_index", 0)
+	
 func _on_BtnStartCheck_pressed():
 	if !check_mode :
 		emit_signal("start_check", true)
@@ -113,18 +121,31 @@ func _on_BtnStartCheck_pressed():
 		$BtnStartCheck.text = '?'
 
 func _on_button_pressed():
-	BaseScript.check_order()
+	for dict_type_doc in dict_papers:
+		dict_papers[dict_type_doc].set("z_index", 0)	
+	
+#	BaseScript.check_order(true)
 	
 	$Shade.set("visible", true)
-	$Shade/Order.show_result()
+	$Shade/OrderResult.show_result(true)
 
 func _on_button_2_pressed():
-	BaseScript.delete_currect_car()
-	emit_signal("level_changed", "Room/desk")
-
-
-func _on_order_close_order_result():
-	emit_signal("level_changed", "Room/desk")
-
+	for dict_type_doc in dict_papers:
+		dict_papers[dict_type_doc].set("z_index", 0)	
+	
+#	BaseScript.check_order(false)
+	
+	$Shade.set("visible", true)
+	$Shade/OrderResult.show_result(false)	
+	
 func _on_gui_work_end():
 	emit_signal("level_changed", "results_of_day")
+
+func _on_order_result_close_order_result():
+	BaseScript.load_game()
+	
+	$AnimatedSprite2D.set("visible", true)
+	$AnimatedSprite2D.play()	
+	
+func _on_animated_sprite_2d_animation_finished():
+	emit_signal("level_changed", "BuyCar")

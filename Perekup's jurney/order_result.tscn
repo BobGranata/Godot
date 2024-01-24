@@ -1,0 +1,63 @@
+[gd_scene load_steps=4 format=3 uid="uid://b0f3gpejdys63"]
+
+[ext_resource type="Texture2D" uid="uid://dtelndhmpvmpi" path="res://pts_shadow.png" id="1_28ieq"]
+[ext_resource type="Script" path="res://order_result.gd" id="1_vrh5v"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_3dldq"]
+line_spacing = 30.0
+font_color = Color(0, 0, 0, 1)
+
+[node name="OrderResult" type="Node2D"]
+script = ExtResource("1_vrh5v")
+
+[node name="ColorRect" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 285.0
+offset_bottom = 360.0
+
+[node name="Shadow" type="Sprite2D" parent="ColorRect"]
+position = Vector2(200.25, 255.75)
+scale = Vector2(1.15931, 1.16265)
+texture = ExtResource("1_28ieq")
+
+[node name="ColorRect" type="ColorRect" parent="ColorRect"]
+layout_mode = 0
+offset_right = 366.0
+offset_bottom = 478.0
+
+[node name="MarginContainer" type="MarginContainer" parent="ColorRect"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/MarginContainer"]
+layout_mode = 2
+
+[node name="lblTitle" type="Label" parent="ColorRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Заказ"
+label_settings = SubResource("LabelSettings_3dldq")
+
+[node name="Button" type="Button" parent="ColorRect"]
+layout_mode = 0
+offset_left = 149.0
+offset_top = 426.0
+offset_right = 215.0
+offset_bottom = 456.0
+text = "Ok"
+
+[node name="lbResultMoney" type="Label" parent="ColorRect"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 352.0
+offset_right = 60.0
+offset_bottom = 375.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 20
+text = "Result money"
+
+[connection signal="pressed" from="ColorRect/Button" to="." method="_on_button_pressed"]

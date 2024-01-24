@@ -16,12 +16,12 @@ func _ready():
 	m_ad_id = 0
 	var dict_car = BaseScript.m_dict_car
 	
-	for item_buy_car in dict_car:		
-		var new_car_ad = load("res://car_ad.tscn").instantiate()
-		new_car_ad.ad_selected.connect(set_ad_id)
-		new_car_ad.set_data(item_buy_car)
-		reset_selection.connect(new_car_ad.reset_item_color)
-		$ScrollContainer/VBoxContainer.add_child(new_car_ad)
+#	for item_buy_car in dict_car:		
+#		var new_car_ad = load("res://car_ad.tscn").instantiate()
+#		new_car_ad.ad_selected.connect(set_ad_id)
+#		new_car_ad.set_data(item_buy_car)
+#		reset_selection.connect(new_car_ad.reset_item_color)
+#		$ScrollContainer/VBoxContainer.add_child(new_car_ad)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -45,5 +45,5 @@ func _on_button_2_pressed():
 	$AnimatedSprite2D.play()
 
 func _on_animated_sprite_2d_animation_finished():
-	BaseScript.set_car_id(m_ad_id)
+#	BaseScript.set_car_id(m_ad_id)
 	emit_signal("level_changed", "BuyCar")
