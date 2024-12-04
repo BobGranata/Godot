@@ -1,62 +1,67 @@
 extends Node2D
 
-var m_dict_order
+signal close_order_result
 
-@onready var model_view = $ColorRect/MarginContainer/VBoxContainer/Model
-@onready var color_view = $ColorRect/MarginContainer/VBoxContainer/Color
+signal add_compare_value
+signal move_doc
+
+var check_mode = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
 	
-func set_data():
-	model_view.text = BaseScript.order_model[BaseScript.MODEL]
-	color_view.text = BaseScript.order_model[BaseScript.COLOR]
+func set_data():	
+	for order_item in BaseScript.order_model:
+		var new_label_key = Label.new()
+		var new_label_value = Label.new()
+
+		new_label_key.text = BaseScript.title_rus[order_item]
+		new_label_value.text = BaseScript.order_model[order_item]
+
+		new_label_key.visible = true
+		new_label_value.visible = true
+		new_label_key.set("theme_override_colors/font_color", "000000")
+		new_label_value.set("theme_override_colors/font_color", "000000")
+		
+		new_label_key.set("theme_override_font_sizes/font_size", 14)
+		new_label_value.set("theme_override_font_sizes/font_size", 14)		
+		
+#		new_label_key.add_to_group("order_list")
+#		new_label_value.add_to_group("order_list")
+		
+		$ColorRect/MarginContainer/HBoxContainer/Key.add_child(new_label_key)
+		$ColorRect/MarginContainer/HBoxContainer/Value.add_child(new_label_value)
+		
+#		var new_label = Label.new()
+#
+#		var title = BaseScript.title_rus[order_item]
+#		title += BaseScript.order_model[order_item]
+#		new_label.text = title
+#		new_label.visible = true
+#		new_label.set("theme_override_colors/font_color", "000000")
+#
+#		new_label.add_to_group("order_list")
+#		$ColorRect/MarginContainer/VBoxContainer.add_child(new_label)
+		
 #	Модель
 #	Год выпуска
 #	Пробег
 #	Количество владельцев
 #	Цена
 
-func show_result():
-	set("visible", true)
-	$ColorRect/Button.set("visible", true)
-	$ColorRect/lbResultMoney.set("visible", true)
-	
-	BaseScript.m_result_order[BaseScript.MODEL]
-	model_view.text = BaseScript.order_model[BaseScript.MODEL]
-	if (!BaseScript.m_result_order[BaseScript.MODEL]) :
-		model_view.text += " Ошибка"
-	else:
-		model_view.text += " Ok"
+func _on_color_rect_gui_input(event):
+	if !check_mode :
+		if event.is_action_pressed("click") :
+			$ColorRect/Shadow.set("visible", true)
+			emit_signal("move_doc", BaseScript.ORDER)
 		
-	color_view.text = BaseScript.order_model[BaseScript.COLOR]
-	if (!BaseScript.m_result_order[BaseScript.COLOR]) :
-		color_view.text += " Ошибка"
-	else:
-		color_view.text += " Ok"
-		
-	var res_money = 100
-	var res_decriment = 0
-	for res in BaseScript.m_result_order:
-		if (!BaseScript.m_result_order[res]):
-			res_decriment -= 100
-	
-	if (res_decriment != 0):
-		res_money = res_decriment
-		
-	$ColorRect/lbResultMoney.text = "Итого: " 
-	$ColorRect/lbResultMoney.text += str(res_money)
-
-
-func _on_button_pressed():
-	set("visible", false)
-	$ColorRect/lbResultMoney.set("visible", false)
-	$ColorRect/Button.set("visible", false)
-
-	BaseScript.m_result_order.clear()
+		if event.is_action_released("click"):
+			$ColorRect/Shadow.set("visible", false)
+		if event is InputEventScreenDrag :
+			$ColorRect.position += event.relative
+			emit_signal("move_doc", BaseScript.ORDER)

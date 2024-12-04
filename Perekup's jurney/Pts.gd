@@ -46,7 +46,11 @@ func set_compare_type(event, type, item : Control):
 		if event is InputEventMouseButton && event.is_pressed() :
 			if event.button_index == MOUSE_BUTTON_LEFT:
 				emit_signal("add_compare_value", base_models.PTS, type, item)
-				
+	else:
+		if event is InputEventScreenDrag :	
+			$PtsPanel.position += event.relative
+			emit_signal("move_doc", base_models.PTS)
+
 func _on_Model_gui_input(event):		
 	set_compare_type(event, base_models.MODEL, pts_model)	
 

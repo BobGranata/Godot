@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://cue72t2paquth"]
+[gd_scene load_steps=9 format=3 uid="uid://cue72t2paquth"]
 
 [ext_resource type="Script" path="res://Room/room.gd" id="1_3nm5e"]
 [ext_resource type="Texture2D" uid="uid://dgpk8posoylb" path="res://Room/home.jpg" id="2_aquak"]
 [ext_resource type="Texture2D" uid="uid://bc36sd57osaio" path="res://mark_1.png" id="4_np2tq"]
-[ext_resource type="PackedScene" uid="uid://cegtvs1rejw1r" path="res://order.tscn" id="5_dxx8d"]
+[ext_resource type="PackedScene" uid="uid://cegtvs1rejw1r" path="res://Order.tscn" id="5_dxx8d"]
 [ext_resource type="Texture2D" uid="uid://cxv6cclojweud" path="res://mark_2.png" id="5_mi11j"]
+[ext_resource type="PackedScene" uid="uid://b8ju0538pde12" path="res://gui.tscn" id="6_7dl3i"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_mgvnk"]
 animations = [{
@@ -83,8 +84,11 @@ polygon = PackedVector2Array(348, 310, 488, 232, 440, 208, 304, 280)
 visible = false
 position = Vector2(472, 160)
 
+[node name="GUI" parent="." instance=ExtResource("6_7dl3i")]
+
 [connection signal="input_event" from="Picture" to="." method="_on_area_2d_input_event"]
 [connection signal="input_event" from="Window" to="." method="_on_window_input_event"]
 [connection signal="mouse_entered" from="Area2D2" to="." method="_on_area_2d_2_mouse_entered"]
 [connection signal="mouse_exited" from="Area2D2" to="." method="_on_area_2d_2_mouse_exited"]
 [connection signal="input_event" from="Desk" to="." method="_on_desk_input_event"]
+[connection signal="work_end" from="GUI" to="." method="_on_gui_work_end"]

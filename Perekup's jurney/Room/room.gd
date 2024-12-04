@@ -3,9 +3,7 @@ extends CanvasLayer
 signal level_changed(level_name)
 # Called when the node enters the scene tree for the first time.
 func _ready():	
-	if BaseScript.m_result_order.size() > 0:
-		$Order.show_result()
-	BaseScript.load_game()
+
 	pass # Replace with function body.
 
 
@@ -36,3 +34,7 @@ func _on_desk_input_event(viewport, event, shape_idx):
 		
 func cleanup():	
 	queue_free()
+	
+func _on_gui_work_end():
+	emit_signal("level_changed", "results_of_day")
+	pass # Replace with function body.
